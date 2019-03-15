@@ -117,7 +117,7 @@
     <!-- 全局js -->
     <script src="/static/js/jquery.min.js?v=2.1.4"></script>
     <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
-
+	<script src="/static/js/plugins/layer/layer.min.js"></script>
     <!-- 自定义js -->
     <script src="/static/js/content.js?v=1.0.0"></script>
 
@@ -144,13 +144,15 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 submitHandler: function(validator, form, submitButton) {
-                    // validator is the BootstrapValidator instance
-                    // form is the jQuery object present the current form
-                    // form.find('.alert').html('Thanks for signing up. Now you can sign in as ' + validator.getFieldElements('username').val()).show();
-                
+                   
                     $.post(form.attr('action'), form.serialize(), function(rs) {
                         
-
+						layer.msg(rs.message);
+						
+						setTimeout(function(){
+							
+							location.href = "{{url('admin/index')}}";
+						},1200);
 
                     }, 'json');
 
