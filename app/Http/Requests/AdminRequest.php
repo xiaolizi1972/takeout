@@ -22,11 +22,15 @@ class AdminRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('id');
+
+       //echo $id;die;
+
         return [
 
-            'username'              => 'required|unique:admins,username',
-            'password'              => 'required|alpha_num|confirmed',
-            'mobile'                => 'required|numeric|unique:admins,mobile',
+            'username'              => 'required|unique:admins,username,'.$id,
+           // 'password'              => 'filled|alpha_num|confirmed',
+            'mobile'                => 'filled|numeric|unique:admins,mobile,'.$id,
             'status'                => 'required|integer',
         ];
     }

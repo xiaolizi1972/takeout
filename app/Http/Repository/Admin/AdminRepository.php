@@ -69,6 +69,8 @@ Class AdminRepository extends BaseRepository
 		
 			DB::commit();
 		} catch (\Exception $e) {
+
+			pr($e->getMessage());die;
 			
 			DB::rollBack();
 			throw new \App\Exceptions\CustomException(lang('update error'), 500);

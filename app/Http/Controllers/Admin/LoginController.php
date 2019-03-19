@@ -31,7 +31,9 @@ class LoginController extends Controller
      */
     public function loginForm()
     {
-        return view('login.login');
+        //echo password_hash('123456', PASSWORD_DEFAULT);
+
+        return view('admin.login.login');
     }
 
 

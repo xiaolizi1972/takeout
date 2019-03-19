@@ -9,6 +9,8 @@ class Admin extends Model
 
 	//protected $table = 'admin';
 	public $timestamps = true;
+
+	//protected $guarded = ['_token','password_confirmation'];
 	
 	//白名单
 	protected $fillable = ['username','password','mobile','realname','status'];

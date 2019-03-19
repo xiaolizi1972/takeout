@@ -41,7 +41,7 @@ class AdminController extends Controller
     {
         $lists = $this->repository->paginate();
 
-        return view('admin.index',['lists'=>$lists]);
+        return view('admin.admin.index',['lists'=>$lists]);
     }
 
 
@@ -51,7 +51,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        return view('admin.admin.create');
     }
 
 
@@ -67,14 +67,16 @@ class AdminController extends Controller
     }
 
    
-
     /**
      * 编辑管理员
-     *
+     * 
+     * @param int  $id  [管理员id]
      */
     public function edit($id)
     {
-        //
+        $admin =  $this->repository->find($id);
+
+        return view('admin.admin.edit',['admin'=>$admin]);
     }
 
 
@@ -87,7 +89,12 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, $id)
     {
-        //
+
+        $guarded = ['_token','password_confirmation'];
+        
+        $this->repository->update($request->except($guarded), $id);
+
+        return json(200, lang('update success'));
     }
 
 
@@ -99,10 +106,10 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $this->repository->delete($id);
+
+        return json(200, lang('delete success'));
     }
-
-
-
 
 }

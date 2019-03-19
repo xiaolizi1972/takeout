@@ -90,13 +90,14 @@ abstract Class BaseRepository extends Repository
 
     	try {
     		
-    		$id = $this->model->insert($data);
+    		$id = $this->model->create($data);
 
     	} catch (\Exception $e) {
     		
            // echo $e->getMessage();die;
+            throw new \App\Exceptions\CustomException($e->getMessage());
 
-    		throw new \App\Exceptions\CustomException(lang('create error'));
+    		//throw new \App\Exceptions\CustomException(lang('create error'));
     	}
 
     	return $id;
@@ -157,7 +158,7 @@ abstract Class BaseRepository extends Repository
      */
     public function find($id, $columns = array('*'))
     {
-    	return $this->model->field($columns)->find($id);
+    	return $this->model->select($columns)->find($id);
     }
 
 
