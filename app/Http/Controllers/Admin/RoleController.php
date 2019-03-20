@@ -3,17 +3,18 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Repository\Admin\RoleRepository;
+use App\Http\Repository\Admin\{RoleRepository,NodeRepository};
 
 class RoleController extends Controller
 {
 
     protected $repository;
+    protected $NodeRepository;
 
-    public function __construct(RoleRepository $repository)
+    public function __construct(RoleRepository $repository,NodeRepository $NodeRepository)
     {
-
-        $this->repository = $repository;
+        $this->repository     =  $repository;
+        $this->NodeRepository =  $NodeRepository;
     }
 
     /**
@@ -36,7 +37,13 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.role.create');
+
+        //$lists =  $this->repository->all();
+        $node_tree =  $this->NodeRepository->nodeTree();
+
+       // pr($node_tree);die;
+
+        return view('admin.role.create',['node_tree'=>$node_tree]);
     }
 
     /**

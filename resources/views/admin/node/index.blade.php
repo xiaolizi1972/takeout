@@ -159,7 +159,7 @@
               anim: 2,
               shadeClose: true, //开启遮罩关闭
               content: url,
-              area: ['60%', '70%'],
+              area: ['70%', '80%'],
             });   
         }
 

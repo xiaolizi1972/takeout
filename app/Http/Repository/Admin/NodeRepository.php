@@ -17,54 +17,71 @@ use App\Models\{Node,NodeGroup};
 
 class NodeRepository extends BaseRepository
 {
-	
-	public function __construct()
-	{
-		$this->model = new Node;
-	}
+    
+    public function __construct()
+    {
+        $this->model = new Node;
+    }
 
 
 
-	/**
-	 * 获取节点下的全部子级
-	 * 
-	 * @param  int  $pid  [父级id] 
-	 * @return array  
-	 */
-	public function nodeBychildAll($pid)
-	{
-		return $this->model->where('pid', $pid)->get();
-	}
+    /**
+     * 获取节点下的全部子级
+     * 
+     * @param  int  $pid  [父级id] 
+     * @return array  
+     */
+    public function nodeBychildAll($pid)
+    {
+        return $this->model->where('pid', $pid)->get();
+    }
+
+
+    /**
+     * 权限节点树
+     * 
+     */
+    public function tree()
+    {
+
+        $lists =  $this->model->where('pid',0)->get();
+
+        foreach ($lists as $key => $val) {
+    
+            $lists[$key]['child'] =  $this->model->where('pid', $val['id'])->get();
+        }
+
+        return $lists;
+    }
 
 
 
-	public function tree()
-	{
+    /**
+     * 节点树
+     * 
+     * 
+     */
+    public function nodeTree()
+    {
 
-		$lists =  $this->model->where('pid',0)->get();
+        $lists =  NodeGroup::get();
 
-		foreach ($lists as $key => $val) {
-			
+        foreach ($lists as $key => $val) {
+            
+            $parent =  $this->model->where([['pid','=',0],['group_id','=', $val['id']]])->get();
 
-			$lists[$key]['child'] =  $this->model->where('pid', $val['id'])->get();
+            $lists[$key]['parent'] =  $parent;
 
-			// if($val['pid'] ==  0){
+            foreach ($parent as $k => $v) {
+                
+                $lists[$key]['parent'][$k]['child'] =  $this->model->where('pid', $v['id'])->get();
+            }
+        }
 
-			// 	$data[$key] =  $val;
+        //pr($lists);die;
 
-			// 	foreach ($lists as $k => $v) {
-				
-			// 		if($val['id'] ==  $v['pid']){
-
-			// 			$data[$key]['child'] =  $v;
-			// 		}
-			// 	}
-			// }
-		}
-
-		return $lists;
-	}
-
+        return $lists;
+    }
 
 
 }
