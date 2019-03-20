@@ -26,7 +26,7 @@ abstract Class BaseRepository extends Repository
 	 * @param  string $order_by  排序字段 
 	 * @return array  
 	 */
-	public function all($columns = array('*'), $order_by='created_at desc')
+	public function all($columns = array('*'), $order_by='created_at')
 	{
 
 		return $this->model->orderBy($order_by)->get();

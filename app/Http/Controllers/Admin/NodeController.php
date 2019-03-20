@@ -3,7 +3,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Repository\Admin\NodeRepository;
+use App\Http\Repository\Admin\{NodeRepository,NodeGroupRepository};
 use App\Http\Requests\NodeRequest;
 
 /**
@@ -23,13 +23,15 @@ class NodeController extends Controller
 
     protected $repository;
     protected $parent_node;
+    protected $NodeGroupRepository;
 
-    public function __construct(NodeRepository $repository)
+    public function __construct(NodeRepository $repository, NodeGroupRepository $NodeGroupRepository)
     {
         $this->repository =  $repository;
+        $this->NodeGroupRepository =  $NodeGroupRepository;
 
         $pid = 0;
-        $this->parent_node  =  $repository->nodeBychildAll($pid);
+        $this->parent_node  =  $repository->nodeBychildAll($pid); 
     }
 
 
@@ -49,7 +51,12 @@ class NodeController extends Controller
      */
     public function create()
     {
-        return view('admin.node.create', ['parent_node'=> $this->parent_node]);
+        $node_groups =  $this->NodeGroupRepository->all();
+
+        return view('admin.node.create', [
+            'parent_node'   => $this->parent_node,
+            'node_groups'   => $node_groups,
+        ]);
     }
 
 

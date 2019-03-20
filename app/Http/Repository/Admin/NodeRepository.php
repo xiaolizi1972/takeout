@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Repository\Admin;
 
-use App\Models\Node;
+use App\Models\{Node,NodeGroup;
+
 /**
  | -------------------
  | 菜单数据仓库
@@ -34,6 +35,21 @@ class NodeRepository extends BaseRepository
 	{
 		return $this->model->where('pid', $pid)->get();
 	}
+
+
+
+	public function tree()
+	{
+
+		$groups = NodeGroup::get();
+
+		foreach ($groups as $key => $val) {
+			# code...
+		}
+
+
+	}
+
 
 
 }

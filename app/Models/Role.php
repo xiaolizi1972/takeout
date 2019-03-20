@@ -11,7 +11,6 @@ class Role extends Model
 	//白名单
 	protected $fillable = ['name'];
 	
-	
 	/**
 	 * 关联权限节点
 	 *

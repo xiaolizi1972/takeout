@@ -44,6 +44,9 @@ Route::group(['namespace' => 'Admin','middleware'=>'admin'], function () {
     Route::get('NodeGroup/create','NodeGroupController@create');
     Route::post('NodeGroup/store','NodeGroupController@store');
 
+    /*角色*/
+    Route::get('role/index','RoleController@index');
+    Route::get('role/create','RoleController@create');
 
 });
 

@@ -47,7 +47,7 @@
                               <a href="#" class="btn btn-default btn-flat">个人资料</a>
                             </div>
                             <div class="pull-right">
-                              <a href="#" class="btn btn-default btn-flat">退出登陆</a>
+                              <a href="{{route('logout')}}" class="btn btn-default btn-flat">退出登陆</a>
                             </div>
                         </li>
                     </ul>
