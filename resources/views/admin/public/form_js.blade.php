@@ -10,6 +10,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/admin/dist/js/demo.js"></script>
 
+<script type="text/javascript" src="/admin/bootstrap-validator/dist/js/bootstrapValidator.js"></script>
 <script src="/admin/static/select2/dist/js/select2.full.min.js"></script>
 <script src="/admin/layer/layer.min.js"></script>
 <script type="text/javascript">

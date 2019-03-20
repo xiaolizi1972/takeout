@@ -22,16 +22,14 @@ class NodeController extends Controller
 {
 
     protected $repository;
-    protected $parent_node;
     protected $NodeGroupRepository;
 
     public function __construct(NodeRepository $repository, NodeGroupRepository $NodeGroupRepository)
     {
-        $this->repository =  $repository;
-        $this->NodeGroupRepository =  $NodeGroupRepository;
 
-        $pid = 0;
-        $this->parent_node  =  $repository->nodeBychildAll($pid); 
+        $this->repository =  $repository;
+
+        $this->NodeGroupRepository =  $NodeGroupRepository;
     }
 
 
@@ -40,7 +38,9 @@ class NodeController extends Controller
      */
     public function index()
     {
-        $lists =  $this->repository->paginate();
+        $lists =  $this->repository->tree();
+
+        //pr($lists);die;
 
         return view('admin.node.index',['lists'=> $lists]);
     }
@@ -51,10 +51,11 @@ class NodeController extends Controller
      */
     public function create()
     {
+        $nodes       =  $this->repository->allBy([['pid','=',0]]);
         $node_groups =  $this->NodeGroupRepository->all();
 
         return view('admin.node.create', [
-            'parent_node'   => $this->parent_node,
+            'nodes'         => $nodes,
             'node_groups'   => $node_groups,
         ]);
     }

@@ -4,7 +4,7 @@
 <!--主体内容部分 -->
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>菜单列表</h1>
+        <h1>角色列表</h1>
     </section>
     <!-- 表格 -->
     <section class="content">
@@ -14,7 +14,7 @@
                     <div class="box-header">
                         <div class="box-title">
                             <div class="col-sm-2">
-                                <a href="{{url('node/create')}}" class="btn btn-success" title="添加">
+                                <a href="javascript:btn_create()" class="btn btn-success" title="添加">
                                     <i class="fa fa-plus"></i> 添加
                                 </a>
                             </div>
@@ -40,11 +40,8 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
-                                            <th>名称</th>
-                                            <th>路由</th>
-                                            <th>图标</th>
-                                            <th>排序</th>
-                                            <th>菜单</th>
+                                            <th>角色名称</th>   
+                                            <th>创建时间</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -58,10 +55,7 @@
                                             </td>
                                             <td>{{$list->id}}</td>
                                             <td>{{$list->name}}</td>
-                                            <td>{{$list->route}}</td>
-                                            <td>{{$list->icon}}</td>
-                                            <td>{{$list->sort}}</td>
-                                            <td>{{$list->visible}}</td>
+                                            <td>{{$list->created_at}}</td>
                                             <td>
                                                 <a href="{{url('admin/edit',array('id'=>$list->id))}}" class="btn btn-xs btn-success btn-editone">
                                                     <i class="fa fa-pencil"></i>
@@ -96,4 +90,24 @@
         </div>
     </section>
 </div>
+@endsection
+@section('table_js')
+    @include('admin.public.table_js')
+    <script type="text/javascript">   
+        function btn_create()
+        {   
+            var url = "{{url('role/create')}}";
+
+            layer.open({
+                title:'新增角色',
+                type: 2,
+                skin: 'layui-layer-lan', //样式类名 layui-layer-molv
+                closeBtn: 1, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: url,
+                area: ['60%', '70%'],
+            });   
+        }
+    </script>
 @endsection

@@ -31,7 +31,6 @@ class LoginController extends Controller
      */
     public function loginForm()
     {
-        //echo password_hash('123456', PASSWORD_DEFAULT);
 
         return view('admin.login.login');
     }
@@ -76,6 +75,7 @@ class LoginController extends Controller
     public function logout()
     {
         session()->flush();
+        
         return redirect('login/loginForm');
     }
 

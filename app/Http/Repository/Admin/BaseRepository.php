@@ -43,7 +43,7 @@ abstract Class BaseRepository extends Repository
 	public function allBy($map,$columns = array('*'), $order_by='created_at')
 	{
 
-		return $this->where($map)->orderBy($order_by)->get();
+		return $this->model->where($map)->orderBy($order_by)->get();
 	}
 
 

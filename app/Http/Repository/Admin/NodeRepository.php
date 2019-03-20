@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Repository\Admin;
 
-use App\Models\{Node,NodeGroup;
+use App\Models\{Node,NodeGroup};
 
 /**
  | -------------------
@@ -41,13 +41,28 @@ class NodeRepository extends BaseRepository
 	public function tree()
 	{
 
-		$groups = NodeGroup::get();
+		$lists =  $this->model->where('pid',0)->get();
 
-		foreach ($groups as $key => $val) {
-			# code...
+		foreach ($lists as $key => $val) {
+			
+
+			$lists[$key]['child'] =  $this->model->where('pid', $val['id'])->get();
+
+			// if($val['pid'] ==  0){
+
+			// 	$data[$key] =  $val;
+
+			// 	foreach ($lists as $k => $v) {
+				
+			// 		if($val['id'] ==  $v['pid']){
+
+			// 			$data[$key]['child'] =  $v;
+			// 		}
+			// 	}
+			// }
 		}
 
-
+		return $lists;
 	}
 
 

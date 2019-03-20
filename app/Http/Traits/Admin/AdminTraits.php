@@ -12,7 +12,6 @@ trait AdminTraits
      * 登录参数验证
      *
      * @param Request $request  验证参数 
-     * 
      */
     public function loginValidate(Request $request)
     {
@@ -95,7 +94,17 @@ trait AdminTraits
 
         $result  =  Admin::where('username', $request->input('username'))->first();
 
+        if(!$result){
+
+            throw new \App\Exceptions\CustomException("该账号不存在", 500);
+        }
+        if(!$result['status']){
+
+            throw new \App\Exceptions\CustomException("该账号已被冻结请联系管理员", 500);
+        }
+
         if (!password_verify($request->input('password'), $result['password'])) {
+            
 			return false;
         } 
 		

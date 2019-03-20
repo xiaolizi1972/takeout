@@ -4,7 +4,7 @@
 <!--主体内容部分 -->
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>菜单列表</h1>
+        <h1>管理员列表</h1>
     </section>
     <!-- 表格 -->
     <section class="content">
@@ -14,7 +14,7 @@
                     <div class="box-header">
                         <div class="box-title">
                             <div class="col-sm-2">
-                                <a href="{{url('admin/create')}}" class="btn btn-success" title="添加">
+                                <a href="javascript:btn_create()" class="btn btn-success" title="添加">
                                     <i class="fa fa-plus"></i> 添加
                                 </a>
                             </div>
@@ -115,4 +115,25 @@
         </div>
     </section>
 </div>
+@endsection
+@section('table_js')
+    @include('admin.public.table_js')
+    <script type="text/javascript">   
+
+        function btn_create()
+        {   
+            var url = "{{url('admin/create')}}";
+            layer.open({
+                title:'新增管理员',
+                load:2,
+                type: 2,
+                skin: 'layui-layer-lan', //样式类名 layui-layer-molv
+                closeBtn: 1, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: url,
+                area: ['60%', '70%'],
+            });   
+        }
+    </script>
 @endsection

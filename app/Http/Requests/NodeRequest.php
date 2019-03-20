@@ -28,8 +28,8 @@ class NodeRequest extends FormRequest
             'pid'               => 'required|integer',
             'route'             => 'required',
             'visible'           => 'required|integer',
-            'sort'              => 'required|integer',
-            'icon'              => 'required'
+            'sort'              => 'integer',
+            //'icon'              => 'required'
         ];
     }
 

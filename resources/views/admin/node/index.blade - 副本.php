@@ -4,7 +4,7 @@
 <!--主体内容部分 -->
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>分组列表</h1>
+        <h1>权限列表</h1>
     </section>
     <!-- 表格 -->
     <section class="content">
@@ -41,6 +41,7 @@
                                             </th>
                                             <th>ID</th>
                                             <th>名称</th>
+                                            <th>路由</th>
                                             <th>图标</th>
                                             <th>排序</th>
                                             <th>菜单</th>
@@ -57,27 +58,10 @@
                                             </td>
                                             <td>{{$list->id}}</td>
                                             <td>{{$list->name}}</td>
-                                            <td>
-                                                  <i class="{{$list->icon}}"></i>
-                                                
-                                            </td>
+                                            <td>{{$list->route}}</td>
+                                            <td>{{$list->icon}}</td>
                                             <td>{{$list->sort}}</td>
-                                            <td>
-                                                @if($list->visible == 1)
-                                                   
-                                                    <a href="javascript:;" class="searchit" >
-                                                        <span class="text-green">
-                                                            <i class="fa fa-circle"></i> 正常
-                                                        </span>
-                                                    </a>
-                                                @else
-                                                    <a href="javascript:;" class="searchit" >
-                                                        <span class="text-gray">
-                                                            <i class="fa fa-circle"></i> 隐藏
-                                                        </span>
-                                                    </a>
-                                                @endif
-                                            </td>
+                                            <td>{{$list->visible}}</td>
                                             <td>
                                                 <a href="{{url('admin/edit',array('id'=>$list->id))}}" class="btn btn-xs btn-success btn-editone">
                                                     <i class="fa fa-pencil"></i>
@@ -105,7 +89,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -113,24 +96,23 @@
     </section>
 </div>
 @endsection
-@section('table_js')
-    @include('admin.public.table_js')
-    <script type="text/javascript">  
 
-        function btn_create()
-        {   
-            var url = "{{url('NodeGroup/create')}}";
-    
-            layer.open({
-                title:'新增分组',
-                type: 2,
-                skin: 'layui-layer-lan', //样式类名 layui-layer-molv
-                closeBtn: 1, //不显示关闭按钮
-                anim: 2,
-                shadeClose: true, //开启遮罩关闭
-                content: url,
-                area: ['50%', '50%'],
-            });   
-        }
-    </script>
+@section('table_js')
+@include('admin.public.table_js')
+<script type="text/javascript">   
+    function btn_create()
+    {   
+        var url = "{{url('node/create')}}";
+
+        layer.open({
+          type: 2,
+          skin: 'layui-layer-demo', //样式类名
+          closeBtn: 1, //不显示关闭按钮
+          anim: 2,
+          shadeClose: true, //开启遮罩关闭
+          content: url,
+          area: ['60%', '60%'],
+        });   
+    }
+</script>
 @endsection

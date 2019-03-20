@@ -12,8 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-info">
-                    <form class="form-horizontal" autocomplete="off" id="defaultForm" action="{{url('admin/update',array('id'=>$admin->id))}}">
-                       
+                    <form class="form-horizontal" autocomplete="off" id="defaultForm" action="{{url('admin/store')}}">
                         @csrf
                         <div class="box-body">
 
@@ -25,7 +24,7 @@
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-                                        <input type="text"  name="username"  class="form-control name" placeholder="请输入管理员账号" value="{{$admin->username}}">
+                                        <input type="text"  name="username" value="" class="form-control name" placeholder="请输入管理员账号">
                                     </div>
                                 </div>
                             </div>
@@ -57,11 +56,6 @@
                                         </span>
                                         <input type="password"  name="password_confirmation"  class="form-control name" placeholder="请确认密码">
                                     </div>
-                                        <span class="help-block">
-                                            <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;" class="text-success">默认为空不更新</font>
-                                            </font>
-                                        </span>
                                 </div>
                             </div>
 
@@ -73,7 +67,7 @@
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-                                        <input type="text"  name="realname" class="form-control name" placeholder="请输入管理员真实姓名"  value="{{$admin->realname}}">
+                                        <input type="text"  name="realname" class="form-control name" placeholder="请输入管理员真实姓名">
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +80,7 @@
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></span>
-                                        <input type="text" name="mobile" class="form-control name" placeholder="请输入手机号码"  value="{{$admin->mobile}}">
+                                        <input type="text" name="mobile" class="form-control name" placeholder="请输入手机号码">
                                     </div>
                                 </div>
                             </div>
@@ -189,15 +183,16 @@ $(document).ready(function () {
             },
             password: {
                 validators: {
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: '密码必须是字母和数组'
+                    notEmpty: {
+                        message: '请输入密码'
                     }
                 }
             },
             password_confirmation: {
                 validators: {
-                   
+                    notEmpty: {
+                        message: '请再次确认密码'
+                    },
                     identical: {
                         field: 'password',
                         message: '两次密码输入不一致'

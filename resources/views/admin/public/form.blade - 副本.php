@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="/admin/dist/css/skins/_all-skins.min.css">
 
     <link rel="stylesheet" href="/admin/static/select2/dist/css/select2.min.css">
-    <link rel="stylesheet" href="/admin/bootstrap-validator/dist/css/bootstrapValidator.min.css">
 
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -28,11 +27,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <!-- 顶部导航 -->
+   <!--  @include('admin.public.nav') -->
+    
+    <!-- 左侧菜单栏 -->
+   <!--  @include('admin.public.menu') -->
 
     <!--主体内容部分 -->
     @yield('content')
-    <div class="control-sidebar-bg"></div>
 
-    @yield('form_js')
+    <!-- 底部内容 -->
+    <!-- @include('admin.public.footer') -->
+
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+ @yield('form_js')
 </body>
 </html>
