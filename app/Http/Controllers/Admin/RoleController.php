@@ -54,7 +54,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        $this->repository->create($request->all());
+
+        return json(200, lang('create success'));
+
     }
 
     /**

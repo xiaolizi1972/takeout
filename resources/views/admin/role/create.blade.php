@@ -31,7 +31,7 @@
                                     <div class="radio">
                                         <i class="fa fa-minus-square-o"></i>
                                         <label for="visible1">
-                                           <input name="all_list[]" type="checkbox" onclick="check_group({{$tree->id}}, this)" class="top-group{{$tree->id}}">{{$tree->name}}
+                                           <input  type="checkbox" onclick="check_group({{$tree->id}}, this)" class="top-group{{$tree->id}}">{{$tree->name}}
                                         </label>
                                     </div>
 
@@ -41,7 +41,7 @@
                                                 &nbsp;&emsp;&emsp;
                                                 <i class="fa fa-plus-square-o"></i>
                                                 <label for="visible1">
-                                                    <input name="all_list[]" type="checkbox" class="tree-group{{$parent->group_id}}" onclick="check_child({{$parent->id}}, {{$parent->group_id}},this)">{{$parent->name}}
+                                                    <input name="all_list[]" type="checkbox" class="tree-group{{$parent->group_id}}" onclick="check_child({{$parent->id}}, {{$parent->group_id}},this)" value="{{$parent->id}}">{{$parent->name}}
                                                 </label>
                                             </div>
                                             <div class="radio">
@@ -49,7 +49,7 @@
                                                 
                                                 @foreach($parent->child as $child)
                                                     <label for="visible1">
-                                                        <input name="all_list[]" type="checkbox" class="tree-group{{$child->group_id}} tree-child{{$child->pid}}">{{$child->name}}
+                                                        <input name="all_list[]" type="checkbox" class="tree-group{{$child->group_id}} tree-child{{$child->pid}}" value="{{$child->id}}">{{$child->name}}
                                                     </label>
                                                 @endforeach
                                             </div>
