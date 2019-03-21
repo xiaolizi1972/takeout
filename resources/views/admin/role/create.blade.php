@@ -6,11 +6,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-info">
-                    <!-- 
-                        <div class="box-header with-border">
-                          <h3 class="box-title">新增角色</h3>
-                        </div> 
-                    -->
                     <form class="form-horizontal" autocomplete="on" id="default_form">
                          @csrf
                         <div class="box-body">
@@ -23,40 +18,42 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="permission">
                                 <label for="password" class="col-sm-2 control-label">选择权限</label>
-                                <div class="col-sm-12">
+                                @foreach($node_tree as $tree)
+                                    <div class="col-sm-8">
+                                        <div class="radio">
+                                            <!-- <i class="fa fa-minus-square-o"></i> -->
+                                            <label for="visible1">
+                                               <input  type="checkbox"  class="level-tree-group" group-id="{{$tree->id}}">
+                                               {{$tree->name}}
+                                            </label>
 
-                                    @foreach($node_tree as $tree)
-                                    <div class="radio">
-                                        <i class="fa fa-minus-square-o"></i>
-                                        <label for="visible1">
-                                           <input  type="checkbox" onclick="check_group({{$tree->id}}, this)" class="top-group{{$tree->id}}">{{$tree->name}}
-                                        </label>
-                                    </div>
-
-                                        @foreach($tree->parent as $parent)
-                                        <div>
-                                            <div class="radio">
-                                                &nbsp;&emsp;&emsp;
-                                                <i class="fa fa-plus-square-o"></i>
-                                                <label for="visible1">
-                                                    <input name="all_list[]" type="checkbox" class="tree-group{{$parent->group_id}}" onclick="check_child({{$parent->id}}, {{$parent->group_id}},this)" value="{{$parent->id}}">{{$parent->name}}
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                &nbsp;&emsp;&emsp;&emsp;
-                                                
-                                                @foreach($parent->child as $child)
+                                            @foreach($tree->parent as $parent)
+                                            <div class="permission_p">
+                                                <div class="radio">
+                                                    &nbsp;&emsp;&emsp;
+                                                   <!--  <i class="fa fa-plus-square-o"></i> -->
                                                     <label for="visible1">
-                                                        <input name="all_list[]" type="checkbox" class="tree-group{{$child->group_id}} tree-child{{$child->pid}}" value="{{$child->id}}">{{$child->name}}
+                                                        <input name="all_list[]" type="checkbox"  class="level-tree-group{{$parent->group_id}} level-tree-parent" parent-id="{{$parent->id}}"  value="{{$parent->id}}">
+                                                        {{$parent->name}}
                                                     </label>
-                                                @endforeach
+                                                </div>
+
+                                                <div class="radio">
+                                                    @foreach($parent->child as $child)
+                                                        &nbsp;&emsp;&emsp;
+                                                        <label for="visible1">
+                                                            <input name="all_list[]" type="checkbox" class="level-tree-group{{$child->group_id}} level-tree-child{{$child->pid}}"  value="{{$child->id}}">
+                                                            {{$child->name}}
+                                                        </label>
+                                                    @endforeach
+                                                </div>
                                             </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="box-footer text-center">
@@ -91,48 +88,36 @@
             });
         }
 
-        //全选
-        function check_all(_this)
-        {
-
-            if($(_this).is(':checked')) {
-                
-               $("input[type='checkbox']").attr("checked",true); 
-
-            }else{
-                $("input[type='checkbox']").attr("checked",false); 
-            }
-        }
-
 
         //选择组
-        function check_group(val, _this)
-        {
-            if($(_this).is(':checked')) {
+        $(".level-tree-group").click( function () { 
 
-               $(".tree-group"+val).attr("checked",'checked'); 
+            var id =  $(this).attr('group-id');
 
-            }else{
-                console.log(0)
-               $(".tree-group"+val).removeAttr("checked"); 
-            }
-        }
+            if($(this).is(':checked')) {
 
-        //选择孩子
-        function check_child(val, group_id, _this)
-        {
-
-            if($(_this).is(':checked')) {
-
-               $(".tree-child"+val).attr("checked",'checked'); 
-
-               $(".top-group"+group_id).attr("checked",'checked');
+                $(".level-tree-group"+id).attr("checked", 'checked');
 
             }else{
-               $(".tree-child"+val).removeAttr("checked"); 
+
+                $(".level-tree-group"+id).removeAttr("checked"); 
             }
+        });
 
-        }
 
+        //父级选择子级
+        $(".level-tree-parent").click( function () { 
+
+            var id =  $(this).attr('parent-id');
+
+            if($(this).is(':checked')) {
+
+                $(".level-tree-child"+id).attr("checked", 'checked');
+
+            }else{
+
+                $(".level-tree-child"+id).removeAttr("checked"); 
+            }
+        });
     </script>
 @endsection
