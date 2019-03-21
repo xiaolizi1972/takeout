@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-info">
-                    <form class="form-horizontal" autocomplete="on" id="default_form">
+                    <form class="form-horizontal" autocomplete="on" id="defaultForm" action="{{url('role/store')}}">
                          @csrf
                         <div class="box-body">
                             
@@ -58,7 +58,7 @@
                         </div>
                         <div class="box-footer text-center">
                             <button type="reset" class="btn btn-default">取消</button>
-                            <button type="button" class="btn btn-info" onclick="btn_sub()">保存</button>
+                            <button type="submit" class="btn btn-info" >保存</button>
                         </div>
                     </form>
                 </div>
@@ -119,5 +119,43 @@
                 $(".level-tree-child"+id).removeAttr("checked"); 
             }
         });
+
+
+        //提交表单
+        $('#defaultForm').bootstrapValidator({
+            message: 'This value is not valid',
+            live: 'disabled',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            submitHandler: function(validator, form, submitButton) {
+               
+                $.post(form.attr('action'), form.serialize(), function(rs) {
+                    
+                    layer.msg(rs.message);
+                    
+                    if(rs.status == 200){
+                        setTimeout(function(){
+                            
+                            parent.location.reload();
+                        },1200);
+                    }
+                }, 'json');
+
+            },
+            fields: {
+                name: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '请输入角色名称'
+                        },
+                    }
+                },
+            }
+        });
+
     </script>
 @endsection

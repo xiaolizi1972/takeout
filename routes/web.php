@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Admin','middleware'=>'admin'], function () {
     /*角色*/
     Route::get('role/index','RoleController@index');
     Route::get('role/create','RoleController@create');
+    Route::post('role/store','RoleController@store');
 
 });
 

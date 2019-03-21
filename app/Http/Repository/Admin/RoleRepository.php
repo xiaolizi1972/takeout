@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Repository\Admin;
 
+use Illuminate\Support\Facades\DB;
+
 class RoleRepository extends BaseRepository
 {
 	
@@ -12,22 +14,35 @@ class RoleRepository extends BaseRepository
 	}
 
 
-
 	/**
 	 * 
-	 * 
-	 * 
+	 * @param  [type] $data  [description]
+	 * @param  [type] $nodes [description]
+	 * @return [type]        [description]
 	 */
-	public function getRoletree()
+	public function create(array $data)
 	{
 
-		//1.查出权限分组
-		//2.查询第一级权限
-		//3.查询自己分类
+		DB::beginTransaction();
+		try{
+	
+			$admin = $this->model->create($data);
+			//$admin_has_role['admin_id'] = $admin->id;
+			//$admin_has_role['role_id']  = $data['role_id'];
+			$admin->nodes()->sync($data['all_list']);
+	
+			DB::commit();
+			
+		} catch (\Exception $e) {
 
-
+			pr($e->getMessage());die;
+			
+			DB::rollBack();
+			throw new \App\Exceptions\CustomException(lang('create error'),500);
+		}
+		
+		return true;
 	}
-
 
 
 
