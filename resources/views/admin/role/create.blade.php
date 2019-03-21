@@ -93,17 +93,17 @@
         $(".level-tree-group").click( function () { 
 
             var id =  $(this).attr('group-id');
-
+            console.log($(".level-tree-group"+id))
             if($(this).is(':checked')) {
 
-                $(".level-tree-group"+id).attr("checked", 'checked');
+                $(".level-tree-group"+id).prop("checked",true);
+
 
             }else{
 
-                $(".level-tree-group"+id).removeAttr("checked"); 
+                $(".level-tree-group"+id).prop("checked",false); 
             }
         });
-
 
         //父级选择子级
         $(".level-tree-parent").click( function () { 
@@ -112,11 +112,11 @@
 
             if($(this).is(':checked')) {
 
-                $(".level-tree-child"+id).attr("checked", 'checked');
+                $(".level-tree-child"+id).prop("checked", true);
 
             }else{
 
-                $(".level-tree-child"+id).removeAttr("checked"); 
+                $(".level-tree-child"+id).prop("checked",false);  
             }
         });
 
