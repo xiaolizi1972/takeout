@@ -36,9 +36,8 @@ Class AdminRepository extends BaseRepository
 		try{
 	
 			$admin = $this->model->create($data);
-			//$admin_has_role['admin_id'] = $admin->id;
-			//$admin_has_role['role_id']  = $data['role_id'];
-			//$admin->roles()->create($admin_has_role);
+
+			$admin->roles()->sync($data['role']);
 	
 			DB::commit();
 			

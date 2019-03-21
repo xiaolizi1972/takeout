@@ -31,7 +31,7 @@ class Admin extends Model
 	 */
 	public function roles()
 	{
-		return $this->belongsToMany('\App\Models\Role');
+		return $this->belongsToMany('\App\Models\Role','admins_has_roles');
 	}
 	
 

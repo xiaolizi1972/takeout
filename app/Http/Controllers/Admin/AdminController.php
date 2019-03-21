@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
-use App\Http\Repository\Admin\AdminRepository;
+use App\Http\Repository\Admin\{AdminRepository,RoleRepository};
 
 
 /**
@@ -25,10 +25,12 @@ class AdminController extends Controller
 {
 
     protected $repository;
+    protected $RoleRepository;
 
-    public function __construct(AdminRepository $repository)
+    public function __construct(AdminRepository $repository, RoleRepository $RoleRepository)
     {
-        $this->repository =  $repository;
+        $this->repository     =  $repository;
+        $this->RoleRepository =  $RoleRepository;
     }
 
 
@@ -51,7 +53,10 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.admin.create');
+
+        $roles =  $this->RoleRepository->all();
+
+        return view('admin.admin.create',['roles'=>$roles]);
     }
 
 
