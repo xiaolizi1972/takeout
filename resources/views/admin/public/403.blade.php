@@ -45,7 +45,7 @@
                     <h3 class="font-bold">你没有权限此操作！</h3>
 
                     <div class="error-desc">
-                        抱歉，页面好像去火星了~
+                        你的账号未开通此权限，
                     </div>
                 </div>
             </div>
