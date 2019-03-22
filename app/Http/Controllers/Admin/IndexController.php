@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
  * =======================
  */
 
-class IndexController extends Controller
+class IndexController extends BaseController
 {
 
 
@@ -43,5 +43,39 @@ class IndexController extends Controller
         return view('admin.index.welcome');
     }
 
+
+    /**
+     * 未找到
+     * 
+     * @return [type] [description]
+     */
+    public function notFound()
+    {
+        return view('admin.public.404');
+    }
+
+
+    /**
+     * 服务器错误
+     * 
+     * @return [type] [description]
+     */
+    public function serverError()
+    {
+        return view('admin.public.500');
+    } 
+
     
+
+    /**
+     * 未授权
+     * @return [type] [description]
+     */
+    public function serverDenied()
+    {
+
+        return view('admin.public.403');
+    }
+
+
 }

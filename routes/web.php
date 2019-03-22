@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Admin','middleware'=>'admin'], function () {
 	/*首页路由*/
     Route::get('/','IndexController@index');
     Route::get('index/welcome','IndexController@welcome')->name('welcome');
+    Route::get('index/notFound','IndexController@notFound');
+    Route::get('index/serverError','IndexController@serverError');
 
     /*管理员日志*/
     Route::get('adminLog/login','AdminLogController@login');

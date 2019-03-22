@@ -26,40 +26,25 @@
 
         <!-- 菜单列表-->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">主导航</li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>管理员</span>
-                    <span class="pull-right-container">
-                        <!-- <span class="label label-primary pull-right">4</span> -->
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="{{url('admin/index')}}"><i class="fa fa-circle-o"></i> 管理员列表</a>
-                    </li>
-                    <li>
-                        <a href="{{url('role/index')}}"><i class="fa fa-circle-o"></i> 角色</a>
-                    </li>
-                    <li>
-                        <a href="{{url('node/index')}}"><i class="fa fa-circle-o"></i> 权限</a>
-                    </li>
-                    <li>
-                        <a href="{{url('NodeGroup/index')}}"><i class="fa fa-circle-o"></i>权限组</a>
-                    </li>
-                </ul>
-            </li>
-
-           <!--  <li>
-                <a href="../widgets.html">
-                    <i class="fa fa-th"></i> <span>单页面</span>
-                    <span class="pull-right-container">
-                      <small class="label pull-right bg-green">new</small>
-                    </span>
-                </a>
-            </li> -->
+            @foreach($menus as $menu)
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span>{{$menu->name}}</span>
+                        <span class="pull-right-container">
+                            <!-- <span class="label label-primary pull-right">4</span> -->
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @foreach($menu->node as $node)
+                        <li>
+                            <a href="{{url($node->route)}}"><i class="fa fa-circle-o"></i>{{$node->name}}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+            @endforeach
         </ul>
     </section>
 </aside>

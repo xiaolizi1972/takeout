@@ -3,7 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
-
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -20,7 +20,7 @@ class Handler extends ExceptionHandler
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
         \Illuminate\Validation\ValidationException::class,
-        App\Exceptions\CustomException::class,
+        \App\Exceptions\CustomException::class,
     ];
 
     /**
@@ -54,23 +54,43 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 
-       
-        if ($exception instanceof NotFoundHttpException) {
+        //HTTP异常
+        if ($exception instanceof HttpException) {
 
             if($request->ajax()){ 
 
                 return json(200, $exception->getMessage());
+            }else{
+
+                switch ($exception->getStatusCode()) {
+
+                   case 403:
+                        return redirect('index/serverDenied');
+                       break;
+                   case 404:
+                        return redirect('index/notFound');
+                       break;
+                   case 500:
+                        return redirect('index/serverError');
+                       break;
+                }
             }
         }
-
+        
+        //模型未找到异常
         if ($exception instanceof ModelNotFoundException) {
 
             if($request->ajax()){ 
 
                 return json(200, $exception->getMessage());
+            }else{
+
+                echo 11111;die;
+                return redirect('index/notFound');
             }
         }
 
+        //验证异常
         if ($exception instanceof ValidationException) {
 
             if($request->ajax()){ 
@@ -79,6 +99,7 @@ class Handler extends ExceptionHandler
             }
         }
 
+        //自定义异常
         if ($exception instanceof CustomException) {
 
             if($request->ajax()){ 

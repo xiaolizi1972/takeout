@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Http\Repository\Admin\{AdminRepository,RoleRepository};
-
+use App\Http\Controllers\Admin\Auth;
 
 /**
  | --------------------
@@ -21,7 +21,7 @@ use App\Http\Repository\Admin\{AdminRepository,RoleRepository};
 
 
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
 
     protected $repository;
@@ -29,8 +29,13 @@ class AdminController extends Controller
 
     public function __construct(AdminRepository $repository, RoleRepository $RoleRepository)
     {
+        //parent::__construct();
+
         $this->repository     =  $repository;
         $this->RoleRepository =  $RoleRepository;
+
+
+
     }
 
 
@@ -41,8 +46,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $lists = $this->repository->paginate();
-
+        $lists = $this->repository->paginate(); abort(403);
+        
         return view('admin.admin.index',['lists'=>$lists]);
     }
 

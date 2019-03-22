@@ -18,7 +18,7 @@ use App\Http\Requests\NodeRequest;
  | 版本:1.0.0
  */
 
-class NodeController extends Controller
+class NodeController extends BaseController
 {
 
     protected $repository;

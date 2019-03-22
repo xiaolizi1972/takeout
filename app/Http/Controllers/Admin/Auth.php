@@ -1,10 +1,10 @@
 <?php
-namespace App\Http\Traits\Admin;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\{Admin,Node,AdminRole,RoleNode};
+use App\Models\{Admin,Node,AdminRole,RoleNode,NodeGroup};
 
-trait AdminTraits
+class Auth
 {
 
     /**
@@ -27,32 +27,21 @@ trait AdminTraits
      */
     public static function menu()
     {
-        //根据用户查出角色
-        //根据角色查出菜单节点
-        //根据节点查出分组
-        //返回组装数据
-   
-        $role_id    =   AdminRole::where('admin_id', self::id())->value('id');
+
+        $role_id    =   AdminRole::where('admin_id', self::id())->value('role_id');
         $node_arr   =   RoleNode::where('role_id', $role_id)->pluck('node_id');
         $group_arr  =   Node::whereIn('id', $node_arr)->groupBy('group_id')->pluck('group_id');
 
-        $nodes      =   Node::whereIn('id', $node_arr)
-                        ->where([['pid','=','0'],['visible','=','1']])
-                        ->orderBy('sort desc')
-                        ->get();
-
-        $groups     =  NodeGroup::whereIn('id',$group_arr)->orderBy('sort desc')->get();
+        $groups     =  NodeGroup::whereIn('id',$group_arr)->orderBy('sort','desc')->get();
 
         foreach ($groups as $key => $val) {
     
-            $groups[$key]['node'] =  Node::where([['pid','=','0'],['visible','=','1'],['group_id','=',$val['group_id']]])
-                                    ->orderBy('sort desc')
+            $groups[$key]['node'] =  Node::where([['pid','=','0'],['visible','=','1'],['group_id','=',$val['id']]])
+                                    ->orderBy('sort','desc')
                                     ->get();
         }
 
         return $groups;
-
-
     }
 
 
@@ -75,7 +64,7 @@ trait AdminTraits
      */
     public static function id()
     {
-        return session('admin_id');
+        return session('admin.id');
     }
 
 }

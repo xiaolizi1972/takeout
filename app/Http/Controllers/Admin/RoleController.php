@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Repository\Admin\{RoleRepository,NodeRepository};
 
-class RoleController extends Controller
+class RoleController extends BaseController
 {
 
     protected $repository;

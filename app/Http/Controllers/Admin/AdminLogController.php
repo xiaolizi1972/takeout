@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\{AdminLog,AdminLoginLog};
 
 
-class AdminLogController extends Controller
+class AdminLogController extends BaseController
 {
    
 

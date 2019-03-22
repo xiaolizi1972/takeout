@@ -17,7 +17,7 @@ use App\Http\Repository\Admin\NodeGroupRepository;
  | 版本:1.0.0 
  */
 
-class NodeGroupController extends Controller
+class NodeGroupController extends BaseController
 {
     
 
