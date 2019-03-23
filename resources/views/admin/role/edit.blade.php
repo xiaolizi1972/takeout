@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-info">
-                    <form class="form-horizontal" autocomplete="on" id="defaultForm" action="{{url('role/store')}}">
+                    <form class="form-horizontal" autocomplete="on" id="defaultForm" action="{{url('role/update',array('id'=>$role->id))}}">
                          @csrf
                         <div class="box-body">
                             
@@ -14,7 +14,7 @@
                                 <label for="name" class="col-sm-2 control-label">名称</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control"  placeholder="名称" name="name" >
+                                    <input type="text" class="form-control"  placeholder="名称" name="name" value="{{$role->name}}">
                                 </div>
                             </div>
 
@@ -25,7 +25,8 @@
                                         <div class="radio">
                                             <!-- <i class="fa fa-minus-square-o"></i> -->
                                             <label for="visible1">
-                                               <input  type="checkbox"  class="level-tree-group" group-id="{{$tree->id}}">
+                                               <input  type="checkbox"  class="level-tree-group" group-id="{{$tree->id}}" 
+                                               @if(in_array($tree->id, $select_groups)) checked @endif>
                                                {{$tree->name}}
                                             </label>
 
@@ -35,7 +36,8 @@
                                                     &nbsp;&emsp;&emsp;
                                                    <!--  <i class="fa fa-plus-square-o"></i> -->
                                                     <label for="visible1">
-                                                        <input name="all_list[]" type="checkbox"  class="level-tree-group{{$parent->group_id}} level-tree-parent" parent-id="{{$parent->id}}"  value="{{$parent->id}}">
+                                                        <input name="all_list[]" type="checkbox"  class="level-tree-group{{$parent->group_id}} level-tree-parent" parent-id="{{$parent->id}}"  value="{{$parent->id}}" 
+                                                        @if(in_array($parent->id, $select_nodes)) checked @endif >
                                                         {{$parent->name}}
                                                     </label>
                                                 </div>
@@ -44,7 +46,9 @@
                                                     @foreach($parent->child as $child)
                                                         &nbsp;&emsp;&emsp;
                                                         <label for="visible1">
-                                                            <input name="all_list[]" type="checkbox" class="level-tree-group{{$child->group_id}} level-tree-child{{$child->pid}}"  value="{{$child->id}}">
+                                                            <input name="all_list[]" type="checkbox" class="level-tree-group{{$child->group_id}} level-tree-child{{$child->pid}}"  value="{{$child->id}}"
+                                                             @if(in_array($child->id, $select_nodes)) checked @endif
+                                                             >
                                                             {{$child->name}}
                                                         </label>
                                                     @endforeach
@@ -70,24 +74,7 @@
 @section('form_js')
     @include('admin.public.form_js')
     <script type="text/javascript">
-        function btn_sub()
-        {
-            var url = "{{url('node/store')}}";
-
-            $.post(url,$("#default_form").serialize(),function(rs){
-
-                layer.msg(rs.message);
-
-                if(rs.status == 200){
-
-                    setTimeout(function(){
-
-                        location.href=document.referrer;
-                    },1200)
-                }
-            });
-        }
-
+        
 
         //选择组
         $(".level-tree-group").click( function () { 

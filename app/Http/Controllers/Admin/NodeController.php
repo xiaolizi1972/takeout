@@ -23,6 +23,7 @@ class NodeController extends BaseController
 
     protected $repository;
     protected $NodeGroupRepository;
+    protected $inputOnly  =  ['name','group_id','pid','route','sort','visible'];
 
     public function __construct(NodeRepository $repository, NodeGroupRepository $NodeGroupRepository)
     {
@@ -39,8 +40,6 @@ class NodeController extends BaseController
     public function index()
     {
         $lists =  $this->repository->tree();
-
-        //pr($lists);die;
 
         return view('admin.node.index',['lists'=> $lists]);
     }
@@ -78,8 +77,14 @@ class NodeController extends BaseController
     public function edit($id)
     {
         $node = $this->repository->find($id);
+        $node_groups =  $this->NodeGroupRepository->all();
+        $nodes       =  $this->repository->allBy([['pid','=',0]]);
 
-        return view('admin.node.edit',['node'=>$node]);
+        return view('admin.node.edit',[
+            'node'  =>  $node,
+            'nodes'         => $nodes,
+            'node_groups'   => $node_groups,
+        ]);
     }
 
 
@@ -88,7 +93,7 @@ class NodeController extends BaseController
      */
     public function update(NodeRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $this->repository->update($request->only($this->inputOnly), $id);
 
         return json(200, lang('update success'));
     }

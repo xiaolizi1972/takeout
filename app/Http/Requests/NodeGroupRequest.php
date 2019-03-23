@@ -3,9 +3,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NodeRequest extends FormRequest
+class NodeGroupRequest extends FormRequest
 {
-     /**
+	
+	/**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -16,7 +17,7 @@ class NodeRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * 定义规则
      *
      * @return array
      */
@@ -25,40 +26,43 @@ class NodeRequest extends FormRequest
         return [
 
             'name'              => 'required',
-            'pid'               => 'required|integer',
-            'route'             => 'required',
-            'visible'           => 'required|integer',
-            'sort'              => 'integer',
+            'visible'           => 'required|numeric',
+            'sort'              => 'numeric',
+            'icon'              => 'required'
         ];
     }
 
 
-
     /**
-     * 获取被定义验证规则的错误消息
+     * 定义错误消息
      *
      * @return array
-     * @translator laravelacademy.org
      */
     public function messages()
     {
         return [
             'required'              =>  ':attribute 必须',
-            'integer'               =>  ':attribute 整型',
+            'numeric'               =>  ':attribute 数字',
         ];
     }
 
+
+    /**
+     * 翻译字段
+     * 
+     * 
+     */
     public function attributes()
     {
         return [
             'name'              => '名称',
-            'pid'               => '父级',
-            'route'             => '规则',
             'visible'           => '菜单',
             'sort'              => '排序',
             'icon'              => '图标'
         ];
     }
+
+
 
 
 }

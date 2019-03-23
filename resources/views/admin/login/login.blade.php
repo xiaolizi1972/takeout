@@ -3,22 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <title>登录</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
+  <!-- 基础样式-->
   <link rel="stylesheet" href="/admin/static/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
+  <!-- 字体 -->
   <link rel="stylesheet" href="/admin/static/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
+  <!--字体图标 -->
   <link rel="stylesheet" href="/admin/static/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
+  <!-- 主题样式 -->
   <link rel="stylesheet" href="/admin/dist/css/AdminLTE.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="/admin/plugins/iCheck/square/blue.css">
+  <!-- 验证 -->
+  <link rel="stylesheet" href="/admin/bootstrap-validator/dist/css/bootstrapValidator.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -29,55 +26,40 @@
 </head>
 <body class="hold-transition login-page" style="background:url(/admin/img/login-background.jpg) no-repeat center">
 <div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html">欢迎登陆</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">请开始你的表演</p>
+    <div class="login-logo">
+        <span>欢迎登陆</sapn>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">每日密码输错5次将禁止登录</p>
+        <form  method="post" id="defaultForm" action="{{route('login')}}">
+            @csrf
+            <div class="form-group has-feedback">
+                <input type="text" name="username" class="form-control" placeholder="账号">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
 
-    <form  method="post" id="login_form">
-        @csrf
-      <div class="form-group has-feedback">
-        <input type="text" name="username" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
+            <div class="form-group has-feedback">
+                <input type="password" name="password" class="form-control" placeholder="密码">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
 
-      <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-
-      <div class="row">
-
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> 记住密码
-            </label>
-          </div>
-        </div>
-
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="button" class="btn btn-primary btn-block btn-flat" onclick="btn_sub()">登录</button>
-        </div>
-        <!-- /.col -->
-      </div>
-    </form>
-
-  </div>
-  <!-- /.login-box-body -->
+            <div class="row">
+                <div class="box-body ">
+                    <button type="submit" class="btn btn-block btn-facebook btn-flat text-center">
+                        登录
+                    </button> 
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-<!-- /.login-box -->
 
 <!-- jQuery 3 -->
 <script src="/admin/static/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/admin/static/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="/admin/plugins/iCheck/icheck.min.js"></script>
 <script src="/admin/layer/layer.min.js"></script>
+<script type="text/javascript" src="/admin/bootstrap-validator/dist/js/bootstrapValidator.js"></script>
 <script>
 
     $(function () {
@@ -90,25 +72,52 @@
     });
 
 
-    function btn_sub()
-    {
-
-        $.post("{{route('login')}}",$('#login_form').serialize(), function(rs){
-
-            layer.msg(rs.message);
-
-            if(rs.status == 200){
-
-                setTimeout(function(){
-
-                    location.href ="/";
+    $('#defaultForm').bootstrapValidator({
+            message: 'This value is not valid',
+            live: 'disabled',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            submitHandler: function(validator, form, submitButton) {
+               
+                $.post(form.attr('action'), form.serialize(), function(rs) {
                     
-                },1200);    
+                    layer.msg(rs.message);
+                    
+                    if(rs.status == 200){
+                        setTimeout(function(){
+                            
+                            location.href= '/';
+                        },1200);
+                    }
+                }, 'json');
+
+            },
+            fields: {
+                username: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '请输入账号'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '账号必须是字母和数组'
+                        }
+                    }
+                },
+
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '请输入密码'
+                        }
+                    }
+                }
             }
-        });  
-    }
-
-
+        });
 
 </script>
 </body>

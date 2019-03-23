@@ -57,10 +57,10 @@
                                             <td>{{$list->name}}</td>
                                             <td>{{$list->created_at}}</td>
                                             <td>
-                                                <a href="{{url('admin/edit',array('id'=>$list->id))}}" class="btn btn-xs btn-success btn-editone">
+                                                <a href="javascript:btn_edit({{$list->id}})" class="btn btn-xs btn-success btn-editone">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
-                                                <a href="javascript:;" class="btn btn-xs btn-danger btn-delone" >
+                                                <a href="javascript:btn_delete({{$list->id}})" class="btn btn-xs btn-danger btn-delone" >
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -94,6 +94,8 @@
 @section('table_js')
     @include('admin.public.table_js')
     <script type="text/javascript">   
+
+        //新增
         function btn_create()
         {   
             var url = "{{url('role/create')}}";
@@ -109,5 +111,24 @@
                 area: ['60%', '70%'],
             });   
         }
+
+
+        //编辑
+        function btn_edit(id)
+        {   
+            var url = "/role/edit/"+id;
+
+            layer.open({
+                title:'编辑角色',
+                type: 2,
+                skin: 'layui-layer-lan', //样式类名 layui-layer-molv
+                closeBtn: 1, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: url,
+                area: ['60%', '70%'],
+            });   
+        }
+
     </script>
 @endsection

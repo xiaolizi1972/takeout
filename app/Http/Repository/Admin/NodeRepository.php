@@ -78,10 +78,28 @@ class NodeRepository extends BaseRepository
             }
         }
 
-        //pr($lists);die;
-
         return $lists;
     }
 
 
+
+    public function delete($id)
+    {
+
+        if($this->model->where('pid',$id)->exists()){
+
+            throw new \App\Exceptions\CustomException("请先删除子节点", 500);
+        }
+
+        try {
+
+            $this->model->destroy($id);
+            
+        } catch (\Exception $e) {
+            
+            throw new \App\Exceptions\CustomException(lang('delete error'), 500);
+        }
+
+        return true;
+    }
 }

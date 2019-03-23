@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Repository\Admin\{RoleRepository,NodeRepository};
+use App\Http\Controllers\Admin\Auth;
 
 class RoleController extends BaseController
 {
 
     protected $repository;
     protected $NodeRepository;
+    protected $inputOnly =  ['name','all_list'];
 
     public function __construct(RoleRepository $repository,NodeRepository $NodeRepository)
     {
@@ -18,9 +20,8 @@ class RoleController extends BaseController
     }
 
     /**
-     * Display a listing of the resource.
+     * 列表
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -31,82 +32,68 @@ class RoleController extends BaseController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 新增
      */
     public function create()
     {
 
-        //$lists =  $this->repository->all();
         $node_tree =  $this->NodeRepository->nodeTree();
-
-       // pr($node_tree);die;
 
         return view('admin.role.create',['node_tree'=>$node_tree]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 保存
      */
     public function store(Request $request)
     {
        
-        $data = $request->all();
-
-       // pr($data);die;
-
-        $this->repository->create($request->all());
+        $this->repository->create($request->only($this->inputOnly));
 
         return json(200, lang('create success'));
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
-     * Show the form for editing the specified resource.
+     * 编辑
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+            
+        $role =  $this->repository->find($id);
+        $node_tree =  $this->NodeRepository->nodeTree();
+
+        $select_nodes  = Auth::selectNode();
+        $select_groups = Auth::selectGroup();
+
+        return view('admin.role.edit',[
+            'role'  =>  $role,
+            'node_tree' => $node_tree,
+            'select_nodes'  => $select_nodes,
+            'select_groups' => $select_groups
+        ]);
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 更新
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->repository->update($request->only($this->inputOnly), $id);
+
+        return json(200, lang('update success'));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 删除
      */
     public function destroy($id)
     {
-        //
+        $this->repository->delete($id);
+
+        return json(200, lang('delete success'));
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
+|-------------------------------
 | 后台路由管理
-|--------------------------------------------------------------------------
+|-------------------------------
 |
 | 作者:小李子
 |
@@ -45,11 +45,17 @@ Route::group(['namespace' => 'Admin','middleware'=>'admin'], function () {
     Route::get('NodeGroup/index','NodeGroupController@index');
     Route::get('NodeGroup/create','NodeGroupController@create');
     Route::post('NodeGroup/store','NodeGroupController@store');
+    Route::get('NodeGroup/edit/{id}','NodeGroupController@edit');
+    Route::any('NodeGroup/update/{id}','NodeGroupController@update');
+    Route::get('NodeGroup/destroy/{id}','NodeGroupController@destroy');
 
     /*角色*/
     Route::get('role/index','RoleController@index');
     Route::get('role/create','RoleController@create');
     Route::post('role/store','RoleController@store');
+    Route::get('role/edit/{id}','RoleController@edit');
+    Route::any('role/update/{id}','RoleController@update');
+    Route::get('role/destroy/{id}','RoleController@destroy');
 
 });
 

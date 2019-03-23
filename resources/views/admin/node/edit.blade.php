@@ -11,7 +11,7 @@
                     <div class="box-header with-border">
                       <h3 class="box-title">新增权限</h3>
                     </div>
-                    <form class="form-horizontal" autocomplete="on" id="defaultForm" action="{{url('node/store')}}">
+                    <form class="form-horizontal" autocomplete="on" id="defaultForm" action="{{url('node/update',array('id'=>$node->id))}}">
                          @csrf
                         <div class="box-body">
                             
@@ -20,7 +20,7 @@
                                 <div class="col-sm-6">
                                     <select class="form-control" name="group_id" style="width: 100%;">
                                         @foreach ($node_groups as $group)
-                                            <option value="{{$group->id}}">{{$group->name}}</option>
+                                            <option value="{{$group->id}}" @if($node->group_id == $group->id) selected @endif>{{$group->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -32,8 +32,8 @@
                                     <select class="form-control " name="pid" style="width: 100%;">
 
                                         <option value="0">无</option>
-                                        @foreach($nodes as $node)
-                                            <option value="{{$node->id}}">{{$node->name}}</option>
+                                        @foreach($nodes as $node_val)
+                                            <option value="{{$node_val->id}}" @if($node->pid == $node_val->id) selected @endif>{{$node_val->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -43,7 +43,7 @@
                                 <label for="name" class="col-sm-2 control-label">名称</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control"  placeholder="权限名称" name="name" >
+                                    <input type="text" class="form-control"  placeholder="权限名称" name="name" value="{{$node->name}}" >
                                 </div>
                             </div>
 
@@ -51,7 +51,7 @@
                                 <label for="route" class="col-sm-2 control-label">规则</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="权限规则" name="route" >
+                                    <input type="text" class="form-control" placeholder="权限规则" name="route" value="{{$node->route}}">
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                                 <label for="sort" class="col-sm-2 control-label">排序</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control"  placeholder="排序" name="sort" value="0">
+                                    <input type="number" class="form-control"  placeholder="排序" name="sort" value="{{$node->sort}}">
                                 </div>
                             </div>
 
@@ -69,9 +69,9 @@
                                 <div class="col-sm-8">
                                     <div class="radio">
                                     <label for="visible1">
-                                        <input  checked="checked"name="visible" type="radio" value="1"> 是</label> 
+                                        <input name="visible" type="radio" value="1" @if($node->visible == 1)  checked="checked" @endif> 是</label> 
                                     <label for="visible0">
-                                        <input  name="visible" type="radio" value="0"> 否
+                                        <input name="visible" type="radio" value="0" @if($node->visible == 0)  checked="checked" @endif> 否
                                     </label>
                                 </div>    
                                 </div>

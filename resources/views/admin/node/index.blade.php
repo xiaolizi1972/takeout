@@ -81,10 +81,11 @@
                                                         <i class="fa fa-sitemap"></i>
                                                     </a>
 
-                                                    <a href="{{url('admin/edit',array('id'=>$list->id))}}" class="btn btn-xs btn-success btn-editone">
+                                                    <a href="javascript:btn_edit({{$list->id}})" class="btn btn-xs btn-success btn-editone">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
-                                                    <a href="javascript:;" class="btn btn-xs btn-danger btn-delone" >
+
+                                                    <a href="javascript:btn_delete({{$list->id}})" class="btn btn-xs btn-danger btn-delone" >
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </td>
@@ -120,10 +121,10 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href="{{url('admin/edit',array('id'=>$child->id))}}" class="btn btn-xs btn-success btn-editone">
+                                                            <a href="javascript:btn_edit({{$child->id}})" class="btn btn-xs btn-success btn-editone">
                                                                 <i class="fa fa-pencil"></i>
                                                             </a>
-                                                            <a href="javascript:;" class="btn btn-xs btn-danger btn-delone" >
+                                                            <a href="javascript:btn_delete({{$child->id}})" class="btn btn-xs btn-danger btn-delone" >
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
                                                         </td>
@@ -148,19 +149,69 @@
 @section('table_js')
     @include('admin.public.table_js')
     <script type="text/javascript">   
+
+        //新增
         function btn_create()
         {   
             var url = "{{url('node/create')}}";
 
             layer.open({
-              type: 2,
-              skin: 'layui-layer-demo', //样式类名
-              closeBtn: 1, //不显示关闭按钮
-              anim: 2,
-              shadeClose: true, //开启遮罩关闭
-              content: url,
-              area: ['70%', '80%'],
+                title:'新增权限',
+                type: 2,
+                skin: 'layui-layer-lan', //样式类名 layui-layer-molv
+                closeBtn: 1, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: url,
+                area: ['60%', '80%'],
             });   
+        }
+
+        //编辑
+        function btn_edit(id)
+        {   
+            var url = "/node/edit/"+id;
+
+            layer.open({
+                title:'编辑权限',
+                type: 2,
+                skin: 'layui-layer-lan', //样式类名 layui-layer-molv
+                closeBtn: 1, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: url,
+                area: ['60%', '80%'],
+            });   
+        }
+
+        //删除
+        function btn_delete(id)
+        {
+            var url ='/node/destroy/'+id;
+
+            layer.confirm('你确定要删除？', {
+              btn: ['确定','取消'] //按钮
+            }, function(){
+               
+                $.get(url,function(rs){
+
+                    layer.msg(rs.message);
+
+                    if(rs.status == 200){
+
+                        setTimeout(function(){
+
+                            location.reload();
+                        },1000);
+                    }
+                })
+
+            }, function(){
+
+                layer.close();
+            });
+
+
         }
 
 
@@ -186,12 +237,14 @@
 
             if($(_this).is(':checked')) {
                 
-               $("input[type='checkbox']").attr("checked",true); 
+               $("input[type='checkbox']").prop("checked",true); 
 
             }else{
-                $("input[type='checkbox']").attr("checked",false); 
+                $("input[type='checkbox']").prop("checked",false); 
             }
         }
 
+
+       
     </script>
 @endsection

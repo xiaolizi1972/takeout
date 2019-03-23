@@ -67,4 +67,26 @@ class Auth
         return session('admin.id');
     }
 
+
+    /**
+     * 选择组
+     * 
+     */
+    public static function selectNode()
+    {
+        $role_id  =  AdminRole::where('admin_id', self::id())->value('role_id');
+
+        return RoleNode::where('role_id', $role_id)->pluck('node_id')->toArray();
+    }
+
+
+    public static function selectGroup()
+    {
+
+        $node_arr   =   self::selectNode();
+        return Node::whereIn('id', $node_arr)->groupBy('group_id')->pluck('group_id')->toArray();
+
+    }
+
+
 }

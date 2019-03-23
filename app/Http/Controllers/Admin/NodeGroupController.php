@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Repository\Admin\NodeGroupRepository;
+use App\Http\Requests\NodeGroupRequest;
 
 
 /**
@@ -19,7 +20,7 @@ use App\Http\Repository\Admin\NodeGroupRepository;
 
 class NodeGroupController extends BaseController
 {
-    
+    protected $inputOnly = ['name','icon','visible','sort'];
 
     public function __construct(NodeGroupRepository $repository)
     {
@@ -52,9 +53,9 @@ class NodeGroupController extends BaseController
      * 保存
      * 
      */
-    public function store(Request $request)
+    public function store(NodeGroupRequest $request)
     {
-        $this->repository->create($request->all());
+        $this->repository->create($request->only($this->inputOnly));
 
         return json(200, lang('create success'));
     }
@@ -76,12 +77,9 @@ class NodeGroupController extends BaseController
      * 更新
      * 
      */
-    public function update(Request $request, $id)
+    public function update(NodeGroupRequest $request, $id)
     {
-
-        $guarded = ['_token'];
-        
-        $this->repository->update($request->except($guarded), $id);
+        $this->repository->update($request->only($this->inputOnly), $id);
 
         return json(200, lang('update success'));
     }
@@ -93,7 +91,6 @@ class NodeGroupController extends BaseController
      */
     public function destroy($id)
     {
-        
         $this->repository->delete($id);
 
         return json(200, lang('delete success'));

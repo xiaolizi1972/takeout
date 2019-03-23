@@ -46,7 +46,7 @@ class AdminController extends BaseController
      */
     public function index()
     {
-        $lists = $this->repository->paginate(); abort(403);
+        $lists = $this->repository->paginate();
         
         return view('admin.admin.index',['lists'=>$lists]);
     }
