@@ -40,153 +40,11 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="index2.html" class="logo">
-          <span class="logo-mini">BY</span>
-          <span class="logo-lg">Beyond</span>
-        </a>
-
-        <nav class="navbar navbar-static-top">
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">导航</span>
-            </a>
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-envelope-o"></i>
-                          <span class="label label-success">4</span>
-                        </a>
-                    </li>
-
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-bell-o"></i>
-                        </a>
-                    </li>
-                 
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <img src="/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                          <span class="hidden-xs">超级管理员</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                                <p>
-                                    超级管理员
-                                  <small>2019-3-15</small>
-                                </p>
-                            </li>
-                         
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn bg-navy margin">
-                                        <i class="fa fa-user"></i>个人信息
-                                    </a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="{{route('logout')}}" class="btn bg-olive margin">
-                                        <i class="fa fa-sign-in"></i>退出登陆
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            <!-- 左侧用户 -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                  <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                  <p>超级管理员</p>
-                  <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
-                </div>
-            </div>
-
-            <!-- 搜索-->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </form>
-           
-            <!-- 菜单列表 -->
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">菜单栏</li>
-                <li class="active treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>主页</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active">
-                            <a href="{{url('/')}}"><i class="fa fa-circle-o"></i>首页</a>
-                        </li>
-                        <li>
-                            <a href="{{route('welcome')}}"><i class="fa fa-circle-o"></i> 系统</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="treeview">
-                    <a href="{{url('admin/index')}}">
-                        <i class="fa fa-table"></i> <span>管理员</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{url('admin/index')}}">
-                                <i class="fa fa-circle-o"></i> 管理员列表
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{url('node/index')}}">
-                                <i class="fa fa-circle-o"></i> 
-                                菜单
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="header">相关链接</li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-circle-o text-red"></i> <span>Important</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-circle-o text-yellow"></i> 
-                        <span>Warning</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-circle-o text-aqua"></i> 
-                        <span>Information</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </aside>
+    <!-- 顶部导航 -->
+    @include('admin.public.nav')
+    
+    <!-- 左侧菜单栏 -->
+    @include('admin.public.menu')
 
     <!-- 统计数据部分 -->
     <div class="content-wrapper">
@@ -318,14 +176,11 @@
                 </section>
             </div>
         </section>
+
+        
     </div>
 
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.4.0
-        </div>
-        <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rightsreserved.
-    </footer>
+    @include('admin.public.footer')
 </div>
 
 <!-- jQuery 3 -->
