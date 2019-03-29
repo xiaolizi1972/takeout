@@ -64,7 +64,7 @@ trait AdminTraits
      */
     public static function user()
     {
-        return Admin::find($this->id());
+        return Admin::find(self::id());
     }
 
 
