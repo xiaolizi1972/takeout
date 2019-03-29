@@ -21,10 +21,18 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <style type="text/css">
+    .login-box{
+
+        margin:  auto;
+        padding-top: 7%;
+    }
+  </style>
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page" style="background:url(/admin/img/login-background.jpg) no-repeat center">
+<body class="hold-transition login-page" style="background-image:url(/admin/img/login-background.jpg);background-size: 100% 100%;background-repeat: no-repeat;">
 <div class="login-box">
     <div class="login-logo">
         <span>欢迎登陆</sapn>

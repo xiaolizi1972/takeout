@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
 
 /**
  * ======================
@@ -26,6 +27,12 @@ class IndexController extends BaseController
      */
     public function index()
     {
+
+        // echo Route::current(); 
+        // // 获取当前路由名称
+        // echo Route::currentRouteName();
+        // // 获取当前路由action属性
+        // echo Route::currentRouteAction();
 
         return view('admin.index.index');
     }

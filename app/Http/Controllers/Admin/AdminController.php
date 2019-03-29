@@ -33,9 +33,6 @@ class AdminController extends BaseController
 
         $this->repository     =  $repository;
         $this->RoleRepository =  $RoleRepository;
-
-
-
     }
 
 
@@ -73,7 +70,7 @@ class AdminController extends BaseController
     {
         $this->repository->create($request->all());
 
-		return json(200, lang('create success'));
+        return json(200, lang('create success'));
     }
 
    
