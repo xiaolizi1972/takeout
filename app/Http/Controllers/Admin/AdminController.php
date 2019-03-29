@@ -30,7 +30,7 @@ class AdminController extends BaseController
     public function __construct(AdminRepository $repository, RoleRepository $RoleRepository)
     {
         //parent::__construct();
-
+        //phpinfo();
         $this->repository     =  $repository;
         $this->RoleRepository =  $RoleRepository;
     }
@@ -119,4 +119,14 @@ class AdminController extends BaseController
         return json(200, lang('delete success'));
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Type $var
+     * @return void
+     */
+    /* public function FunctionName(Type $var = null)
+    {
+        # code...
+    } */
 }
