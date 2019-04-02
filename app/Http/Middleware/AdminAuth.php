@@ -22,7 +22,6 @@ class AdminAuth
             return  redirect('login/loginForm');
         }
 
-        view()->share('menus',Auth::menu());
         return $next($request);
     }
 }

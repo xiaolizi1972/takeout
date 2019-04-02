@@ -32,12 +32,12 @@ trait AdminTraits
 
         if($errors->first('username')) {
 
-            throw new \App\Exceptions\CustomException($errors->first('username'), 500);
+            throw new \App\Exceptions\Custom($errors->first('username'), 500);
         }
 
         if($errors->first('password')) {
 
-            throw new \App\Exceptions\CustomException($errors->first('password'), 500);
+            throw new \App\Exceptions\Custom($errors->first('password'), 500);
         }
 
     }
@@ -96,11 +96,11 @@ trait AdminTraits
 
         if(!$result){
 
-            throw new \App\Exceptions\CustomException("该账号不存在", 500);
+            throw new \App\Exceptions\Custom("该账号不存在", 500);
         }
         if(!$result['status']){
 
-            throw new \App\Exceptions\CustomException("该账号已被冻结请联系管理员", 500);
+            throw new \App\Exceptions\Custom("该账号已被冻结请联系管理员", 500);
         }
 
         if (!password_verify($request->input('password'), $result['password'])) {

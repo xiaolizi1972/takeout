@@ -25,13 +25,13 @@ class NodeRequest extends FormRequest
         return [
 
             'name'              => 'required',
-            'pid'               => 'required|integer',
             'route'             => 'required',
-            'visible'           => 'required|integer',
-            'sort'              => 'integer',
+            'group_id'          => 'required|numeric',
+            'pid'               => 'required|numeric',
+            'visible'           => 'required|numeric',
+            'sort'              => 'numeric',
         ];
     }
-
 
 
     /**
@@ -52,11 +52,11 @@ class NodeRequest extends FormRequest
     {
         return [
             'name'              => '名称',
+            'route'             => '路由',
+            'group_id'          => '分组',
             'pid'               => '父级',
-            'route'             => '规则',
-            'visible'           => '菜单',
             'sort'              => '排序',
-            'icon'              => '图标'
+            'visible'           => '菜单显示',
         ];
     }
 

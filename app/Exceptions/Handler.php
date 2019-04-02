@@ -20,7 +20,7 @@ class Handler extends ExceptionHandler
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
         \Illuminate\Validation\ValidationException::class,
-        \App\Exceptions\CustomException::class,
+        \App\Exceptions\Custom::class,
     ];
 
     /**
@@ -95,12 +95,12 @@ class Handler extends ExceptionHandler
 
             if($request->ajax()){ 
 
-                return json(500, $exception->validator->errors()->first());
+                return json(419, $exception->validator->errors()->first());
             }
         }
 
         //自定义异常
-        if ($exception instanceof CustomException) {
+        if ($exception instanceof Custom) {
 
             if($request->ajax()){ 
 
