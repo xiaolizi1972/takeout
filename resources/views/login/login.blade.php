@@ -18,6 +18,7 @@
 
     <!-- 验证 -->
     <link rel="stylesheet" href="/static/bootstrap-validator/dist/css/bootstrapValidator.min.css">
+    <link href="/static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
 
     <script>
@@ -54,12 +55,14 @@
         </div>
     </div>
 
-<!-- jQuery 3 -->
-<script src="/static/js/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/static/js/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/static/js/layer/layer.min.js"></script>
-<script type="text/javascript" src="/static/bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+<!-- 插件依赖 -->
+<script src="/static/js/plugins/layer/layer.min.js"></script>
+<script src="/static/bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+<script src="/static/js/plugins/toastr/toastr.min.js"></script>
+
 <script type="text/javascript">
     $('#defaultForm').bootstrapValidator({
         message: 'This value is not valid',
@@ -72,39 +75,52 @@
         submitHandler: function(validator, form, submitButton) {
            
             $.post(form.attr('action'), form.serialize(), function(rs) {
-                
-                layer.msg(rs.message);
-                
-                if(rs.status == 200){
-                    setTimeout(function(){
-                        
-                        location.href= '/';
-                    },1200);
+ 
+                switch(rs.status){
+                    case 200:
+                 
+                        toastr.success(rs.message);
+                       
+                        setTimeout(function(){
+                            
+                             location.href= '/';
+                        },1200);
+
+                        break;
+                    case 500:
+                  
+                        toastr.error(rs.message);
+
+                        break;
+                default:
+                  
+                        layer.msg(rs.message); 
                 }
+
             }, 'json');
 
         },
         fields: {
-            username: {
-                message: 'The username is not valid',
-                validators: {
-                    notEmpty: {
-                        message: '请输入账号'
-                    },
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: '账号必须是字母和数组'
-                    }
-                }
-            },
+            // username: {
+            //     message: 'The username is not valid',
+            //     validators: {
+            //         notEmpty: {
+            //             message: '请输入账号'
+            //         },
+            //         regexp: {
+            //             regexp: /^[a-zA-Z0-9_\.]+$/,
+            //             message: '账号必须是字母和数组'
+            //         }
+            //     }
+            // },
 
-            password: {
-                validators: {
-                    notEmpty: {
-                        message: '请输入密码'
-                    }
-                }
-            }
+            // password: {
+            //     validators: {
+            //         notEmpty: {
+            //             message: '请输入密码'
+            //         }
+            //     }
+            // }
         }
     });
 </script>
