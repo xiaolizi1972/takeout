@@ -8,39 +8,7 @@ use App\Models\{Admin,AdminLoginLog};
 trait AdminTraits
 {
 	
-	/**
-     * 登录参数验证
-     *
-     * @param Request $request  验证参数 
-     */
-    public function loginValidate(Request $request)
-    {
 
-        $rules    =   [
-            'username' => 'required',
-            'password' => 'required'
-        ];
-
-        $messages =   [
-            'username.required' => '请输入用户名',
-            'password.required' => '请输入密码'
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        $errors = $validator->errors();
-
-        if($errors->first('username')) {
-
-            throw new \App\Exceptions\Custom($errors->first('username'), 500);
-        }
-
-        if($errors->first('password')) {
-
-            throw new \App\Exceptions\Custom($errors->first('password'), 500);
-        }
-
-    }
 
 
     /**  
@@ -96,11 +64,11 @@ trait AdminTraits
 
         if(!$result){
 
-            throw new \App\Exceptions\Custom("该账号不存在", 500);
+            throw new \App\Exceptions\Custom("该账号不存在", 419);
         }
         if(!$result['status']){
 
-            throw new \App\Exceptions\Custom("该账号已被冻结请联系管理员", 500);
+            throw new \App\Exceptions\Custom("该账号已被冻结请联系管理员", 419);
         }
 
         if (!password_verify($request->input('password'), $result['password'])) {

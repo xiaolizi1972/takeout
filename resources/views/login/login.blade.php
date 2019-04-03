@@ -48,11 +48,11 @@
                 </form>
             </div>
         </div>
-        <div class="signup-footer">
+       <!--  <div class="signup-footer">
             <div class="pull-left">
                 &copy; hAdmin
             </div>
-        </div>
+        </div> -->
     </div>
 
 <!-- 全局js -->
@@ -64,6 +64,24 @@
 <script src="/static/js/plugins/toastr/toastr.min.js"></script>
 
 <script type="text/javascript">
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "progressBar": true,
+        "positionClass": "toast-top-center",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "7000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    
     $('#defaultForm').bootstrapValidator({
         message: 'This value is not valid',
         live: 'disabled',
@@ -83,7 +101,7 @@
                        
                         setTimeout(function(){
                             
-                             location.href= '/';
+                            location.href= '/';
                         },1200);
 
                         break;
@@ -94,7 +112,7 @@
                         break;
                 default:
                   
-                        layer.msg(rs.message); 
+                        toastr.warning(rs.message); 
                 }
 
             }, 'json');
