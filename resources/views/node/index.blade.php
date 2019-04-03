@@ -22,8 +22,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <div id="nestable-menu">
-                    <button type="button" data-action="expand-all" class="btn btn-white btn-sm">展开所有</button>
-                    <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">收起所有</button>
+                    <button type="button" id="top-fold" data-action="expand-all" data-type="0" class="btn btn-white btn-sm">展开所有</button>
                 </div>
             </div>
         </div>
@@ -31,7 +30,7 @@
             <div class="col-sm-6">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>自定义主题</h5>
+                        <h5>节点树</h5>
                     </div>
                     <div class="ibox-content">
 
@@ -44,12 +43,13 @@
                                 @foreach($lists as $list)
                                     
                                     <li class="dd-item" data-id="{{$list->id}}">
+                                        <button data-action="expand" data-type="0" data-id="{{$list->id}}" type="button" class="btn_fold">展开</button>
                                         <div class="dd-handle">
                                             <span class="pull-right">
-                                                <button type="button" class="btn btn-info btn-xs">
+                                                <button type="button" class="btn btn-info btn-xs btn_create" data-id= "{{$list->id}}">
                                                     新增
                                                 </button>
-                                                <button type="button" class="btn btn-info btn-xs">编辑</button>
+                                                <button type="button" class="btn btn-info btn-xs btn_edit" data-id="{{$list->id}}">编辑</button>
                                                 <button type="button" class="btn btn-danger btn-xs">删除</button>
                                             </span>
                                             <span class="label label-info">
@@ -59,8 +59,9 @@
 
                                         @foreach($list->child as $child)
 
-                                            <ol class="dd-list">
+                                            <ol class="dd-list dd-child child-list{{$child->pid}}" style="display: none;">
                                                 <li class="dd-item" data-id="{{$child->id}}">
+
                                                     <div class="dd-handle">
                                                         <span class="pull-right"> 
                                                             <button type="button" class="btn btn-info btn-xs">编辑</button>
@@ -92,29 +93,29 @@
                                 <label class="col-sm-3 control-label">名称：</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" placeholder="节点名称" class="form-control" name="name"> 
+                                    <input type="text" placeholder="节点名称" class="form-control" name="name" id="input_name" value=""> 
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">路由：</label>
                                 <div class="col-sm-8">
-                                    <input type="text" placeholder="路由地址" class="form-control" name="route">
-                                    <span class="help-block m-b-none">如：admin/index</span>
+                                    <input type="text" placeholder="路由地址" class="form-control" name="route" id="input_route" value="">
+                                  <!--   <span class="help-block m-b-none">如：admin/index</span> -->
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">排序：</label>
                                 <div class="col-sm-8">
-                                    <input type="text" placeholder="路由地址" class="form-control" name="sort" value="0">
+                                    <input type="text" placeholder="节点排序" class="form-control" name="sort" value="0" id="input_sort">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">选择分组</label>
+                                <label class="col-sm-3 control-label">选择分组：</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control m-b" name="group_id">
+                                    <select class="form-control" name="group_id" id="input_group_id">
                                         <option value=""></option>
                                         @foreach($groups as $group)
                                             <option value="{{$group->id}}">{{$group->name}}</option>
@@ -124,9 +125,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">选择上级</label>
+                                <label class="col-sm-3 control-label">选择上级：</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control m-b" name="pid">
+                                    <select class="form-control" name="pid" id="parent-select">
                                         <option value="0">无</option>
                                         @foreach($parents as $parent)
                                             <option value="{{$parent->id}}">{{$parent->name}}</option>
@@ -136,7 +137,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">菜单显示</label>
+                                <label class="col-sm-3 control-label">菜单显示：</label>
 
                                 <div class="col-sm-8">
                                    
@@ -169,7 +170,7 @@
     <!-- 自定义js -->
     <script src="/static/js/content.js?v=1.0.0"></script>
     <!-- 树结构js -->
-    <script src="/static/js/plugins/nestable/jquery.nestable.min.js"></script>
+   <!--  <script src="/static/js/plugins/nestable/jquery.nestable.min.js"></script> -->
     <!-- 插件依赖 -->
     <script src="/static/js/plugins/layer/layer.min.js"></script>
     <script src="/static/bootstrap-validator/dist/js/bootstrapValidator.js"></script>
@@ -178,19 +179,6 @@
     <script>
 
         $(document).ready(function () {
-
-            //列表树展开&折叠
-            $('#nestable-menu').on('click', function (e) {
-                var target = $(e.target),
-                    action = target.data('action');
-                if (action === 'expand-all') {
-                    $('.dd').nestable('expandAll');
-                }
-                if (action === 'collapse-all') {
-                    $('.dd').nestable('collapseAll');
-                }
-            });
-
 
             //验证
             $('#defaultForm').bootstrapValidator({
@@ -206,10 +194,8 @@
                     $.post(form.attr('action'), form.serialize(), function(rs) {
 
 
-                        switch(rs.status)
-                        {
-                        case 200:
-                         
+                        if(rs.status == 200){
+
                             toastr.success(rs.message);
                            
                             setTimeout(function(){
@@ -217,15 +203,9 @@
                                 location.reload();
                             },1200);
 
-                          break;
-                        case 500:
-                          
-                            toastr.error(rs.message);
+                        }else{
 
-                          break;
-                        default:
-                          
-                            layer.msg(rs.message); 
+                            toastr.error(rs.message);
                         }
 
                     }, 'json');
@@ -271,15 +251,87 @@
                 // }
             });
 
+            //新增选中
+            $(".btn_create").click( function () { 
+
+                var id = $(this).attr('data-id');
+
+                $('#defaultForm')[0].reset();
+
+                $("#parent-select").find("option[value='"+id+"']").attr("selected",true);
+            });
+
+            //编辑数据
+            $(".btn_edit").click( function () { 
+
+                var id = $(this).attr('data-id');
+                var url = '/node/edit/'+id;
+
+                $('#defaultForm')[0].reset();
+
+                $.get(url, function(rs){
+                         
+                    if(rs.status == 200){
+
+                        $('#input_name').val(rs.data.name);
+                        $('#input_route').val(rs.data.route);
+                        $('#input_sort').val(rs.data.sort);
+                        $('#input_group_id').val(rs.data.group_id);
+                        $("#parent-select").find("option[value='"+rs.data.pid+"']").attr("selected",true);
+                    }
+                });
+            });
 
 
 
+            //父级折叠
+            $(".btn_fold").click( function () { 
 
+                var id   =  $(this).attr('data-id');
+                var type =  $(this).attr('data-type');
 
+                if(type == 1){
 
+                    $(this).attr('data-action','expand');
+                    $(this).attr('data-type', 0);
+                    $('.child-list'+id).hide();
+                }else{
 
+                    $(this).attr('data-action','collapse');
+                    $(this).attr('data-type', 1);
+                    $('.child-list'+id).show();
+                }
+            });
 
+            //全部折叠
+            $("#top-fold").click( function () { 
 
+                var id   =  $(this).attr('data-id');
+                var type =  $(this).attr('data-type');
+
+                if(type == 1){
+
+                    $(this).text('展开所有');
+                    $(this).attr('data-action','expand-all');
+                    $(this).attr('data-type', 0);
+
+                    $('.btn_fold').attr('data-type', 0);
+                    $('.btn_fold').attr('data-action','expand');
+
+                    $('.dd-child').hide();
+
+                }else{
+
+                    $(this).text('收起所有');
+                    $(this).attr('data-action','collapse-all');
+                    $(this).attr('data-type', 1);
+
+                    $('.btn_fold').attr('data-type', 1);
+                    $('.btn_fold').attr('data-action','collapse');
+
+                    $('.dd-child').show();
+                }
+            });
         });
     </script>
 

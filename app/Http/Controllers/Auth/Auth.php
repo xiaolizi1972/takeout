@@ -16,8 +16,7 @@ class Auth
 	//是否有权限此操作
 	public static function check()
 	{
-
-
+		return session('admin_id') ?  true :false;
 	}
 
 
@@ -32,7 +31,7 @@ class Auth
 	public static function login($admin_id)
 	{
 
-		session('admin_id');
+		session(['admin_id' => $admin_id]);
 	}
 	
 
@@ -41,6 +40,12 @@ class Auth
 	{
 
 
+	}
+
+
+	public static function isLogin()
+	{
+		return session('admin_id') ?  true :false;
 	}
 
 

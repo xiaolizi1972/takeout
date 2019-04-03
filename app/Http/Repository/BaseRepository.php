@@ -158,7 +158,7 @@ abstract Class BaseRepository extends Repository
      */
     public function find($id)
     {
-    	return $this->model->select($columns)->find($id);
+    	return $this->model->find($id);
     }
 
 

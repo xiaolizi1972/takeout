@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Http\Controllers\Admin\Auth;
+use App\Http\Controllers\Auth\Auth;
 
 class AdminAuth
 {
@@ -17,7 +17,7 @@ class AdminAuth
     public function handle($request, Closure $next)
     {
 
-        if(!session('admin')){
+        if(!Auth::isLogin()){
 
             return  redirect('login/loginForm');
         }

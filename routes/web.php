@@ -74,14 +74,15 @@ Route::middleware(['admin'])->group(function () {
     /*首页路由*/
     Route::get('/','IndexController@index');
     Route::get('index/welcome','IndexController@welcome')->name('welcome');
-    // Route::get('index/notFound','IndexController@notFound');
-    // Route::get('index/serverError','IndexController@serverError');
+    Route::get('index/not_found','IndexController@notFound');
+    Route::get('index/server_error','IndexController@serverError');
+    Route::get('index/server_denied','IndexController@serverDenied');
 
 
     //节点
     Route::get('node/index','NodeController@index');
     Route::post('node/store','NodeController@store');
-
+    Route::get('node/edit/{id}','NodeController@edit');
 
 
 

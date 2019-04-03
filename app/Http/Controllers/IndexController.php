@@ -25,4 +25,27 @@ class IndexController extends Controller
 	}
 
 
+	//404
+	public function notFound()
+	{
+
+		return view('index.404');
+	}
+
+
+	//403
+	public function serverDenied()
+	{
+
+		return view('index.403');
+	}
+
+
+	//500
+	public function serverError()
+	{
+		return view('index.500');
+	}
+
+
 }

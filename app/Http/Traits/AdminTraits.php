@@ -45,7 +45,9 @@ trait AdminTraits
             return false;
         } 
 
-        Auth::login($login_admin['id']);   
+        Auth::login($login_admin['id']);
+
+        return true;
     }
     
 

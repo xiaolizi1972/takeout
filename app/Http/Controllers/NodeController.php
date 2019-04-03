@@ -38,15 +38,17 @@ class NodeController extends Controller
 		$this->repository->create($request->all());
 
 		return json(200, lang('action success'));
-
-
 	}
 
 
-	// public function create()
-	// {
-	// 	return view('node.')
-	// }
+	//
+	public function edit($id)
+	{
+		$node = $this->repository->find($id);
+
+		return json(200, '获取成功', $node);
+
+	}	
 
 
 }

@@ -93,52 +93,45 @@
         submitHandler: function(validator, form, submitButton) {
            
             $.post(form.attr('action'), form.serialize(), function(rs) {
- 
-                switch(rs.status){
-                    case 200:
-                 
-                        toastr.success(rs.message);
-                       
-                        setTimeout(function(){
-                            
-                            location.href= '/';
-                        },1200);
 
-                        break;
-                    case 500:
-                  
-                        toastr.error(rs.message);
 
-                        break;
-                default:
-                  
-                        toastr.warning(rs.message); 
+                if(rs.status == 200){
+
+                    toastr.success(rs.message);
+                   
+                    setTimeout(function(){
+                        location.href= '/';
+                    },1200);
+
+                }else{
+
+                    toastr.error(rs.message);
                 }
 
             }, 'json');
 
         },
         fields: {
-            // username: {
-            //     message: 'The username is not valid',
-            //     validators: {
-            //         notEmpty: {
-            //             message: '请输入账号'
-            //         },
-            //         regexp: {
-            //             regexp: /^[a-zA-Z0-9_\.]+$/,
-            //             message: '账号必须是字母和数组'
-            //         }
-            //     }
-            // },
+            username: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: '请输入账号'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9_\.]+$/,
+                        message: '账号必须是字母和数组'
+                    }
+                }
+            },
 
-            // password: {
-            //     validators: {
-            //         notEmpty: {
-            //             message: '请输入密码'
-            //         }
-            //     }
-            // }
+            password: {
+                validators: {
+                    notEmpty: {
+                        message: '请输入密码'
+                    }
+                }
+            }
         }
     });
 </script>

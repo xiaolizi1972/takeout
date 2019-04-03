@@ -29,14 +29,14 @@ class LoginController extends Controller
         }
 
         //登录处理
-        if($this->loginHandle($request)){
+        if(!$this->loginHandle($request)){
 
-        	$this->loginSuccessLog($request);
-
-        	return json(200, '登录成功');
+        	$this->loginFailureResponse($request);
         }
 
-        $this->loginFailureResponse($request);
+    	$this->loginSuccessLog($request);
+
+    	return json(200, '登录成功');
 	}
 		
 
