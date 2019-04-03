@@ -55,27 +55,27 @@ class Handler extends ExceptionHandler
     {
 
         //HTTP异常
-        if ($exception instanceof HttpException) {
+        // if ($exception instanceof HttpException) {
 
-            if($request->ajax()){ 
+        //     if($request->ajax()){ 
 
-                return json(200, $exception->getMessage());
-            }else{
+        //         return json(200, $exception->getMessage());
+        //     }else{
 
-                switch ($exception->getStatusCode()) {
+        //         switch ($exception->getStatusCode()) {
 
-                   case 403:
-                        return redirect('index/serverDenied');
-                       break;
-                   case 404:
-                        return redirect('index/notFound');
-                       break;
-                   case 500:
-                        return redirect('index/serverError');
-                       break;
-                }
-            }
-        }
+        //            case 403:
+        //                 return redirect('index/serverDenied');
+        //                break;
+        //            case 404:
+        //                 return redirect('index/notFound');
+        //                break;
+        //            case 500:
+        //                 return redirect('index/serverError');
+        //                break;
+        //         }
+        //     }
+        // }
         
         //模型未找到异常
         if ($exception instanceof ModelNotFoundException) {

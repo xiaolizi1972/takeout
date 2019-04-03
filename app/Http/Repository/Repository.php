@@ -46,11 +46,11 @@ abstract Class Repository
 
 
     //查询单条数据
-    abstract public function find($id, $columns = array('*'));
+    abstract public function find($id);
 
 
     //根据条件查询单条
-    abstract public function findBy($field, $value, $columns = array('*'));
+    abstract public function findBy($field, $value);
 
 
 }

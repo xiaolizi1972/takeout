@@ -156,7 +156,7 @@ abstract Class BaseRepository extends Repository
      * @param  array  $columns  需要查询的字段
      * @return array 
      */
-    public function find($id, $columns = array('*'))
+    public function find($id)
     {
     	return $this->model->select($columns)->find($id);
     }
@@ -170,9 +170,9 @@ abstract Class BaseRepository extends Repository
      * @param  array   $columns 需要查询的条件字段
      * @param  array 
      */
-    public function findBy($field, $value, $columns = array('*'))
+    public function findBy($field, $value)
     {
-    	return $this->where($field, $value)->field($columns)->first();
+    	return $this->model->where($field, $value)->first();
     }
 
 
