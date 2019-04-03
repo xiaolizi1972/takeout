@@ -46,11 +46,11 @@
                                         <button data-action="expand" data-type="0" data-id="{{$list->id}}" type="button" class="btn_fold">展开</button>
                                         <div class="dd-handle">
                                             <span class="pull-right">
-                                                <button type="button" class="btn btn-info btn-xs btn_create" data-id= "{{$list->id}}">
+                                                <button type="button" class="btn btn-info btn-xs btn_create" data-id="{{$list->id}}">
                                                     新增
                                                 </button>
                                                 <button type="button" class="btn btn-info btn-xs btn_edit" data-id="{{$list->id}}">编辑</button>
-                                                <button type="button" class="btn btn-danger btn-xs">删除</button>
+                                                <button type="button" class="btn btn-danger btn-xs btn_delete" data-id="{{$list->id}}">删除</button>
                                             </span>
                                             <span class="label label-info">
                                                  {{$list->name}}
@@ -65,7 +65,7 @@
                                                     <div class="dd-handle">
                                                         <span class="pull-right"> 
                                                             <button type="button" class="btn btn-info btn-xs">编辑</button>
-                                                            <button type="button" class="btn btn-danger btn-xs">删除</button>
+                                                            <button type="button" class="btn btn-danger btn-xs btn_delete" data-id="{{$child->id}}">删除</button>
                                                         </span>
                                                         <span class="label label-warning">
                                                             {{$child->name}}
@@ -154,7 +154,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-8">
-                                    <button class="btn btn-sm btn-info" type="submit">登 录</button>
+                                    <button class="btn btn-sm btn-info" type="submit">确定</button>
                                 </div>
                             </div>
                         </form>
@@ -193,7 +193,6 @@
                    
                     $.post(form.attr('action'), form.serialize(), function(rs) {
 
-
                         if(rs.status == 200){
 
                             toastr.success(rs.message);
@@ -211,49 +210,52 @@
                     }, 'json');
 
                 },
-                // fields: {
-                //     name: {
-                //         message: 'The username is not valid',
-                //         validators: {
-                //             notEmpty: {
-                //                 message: '请输入名称'
-                //             }
-                //         }
-                //     },
-                //     route: {
-                //         validators: {
-                //             notEmpty: {
-                //                 message: '输入路由地址'
-                //             }
-                //         }
-                //     },
-                //     sort: {
-                //         validators: {
-                //             notEmpty: {
-                //                 message: '输入排序'
-                //             }
-                //         }
-                //     },
-                //     group_id: {
-                //         validators: {
-                //             notEmpty: {
-                //                 message: '选择分组'
-                //             }
-                //         }
-                //     },
-                //     pid: {
-                //         validators: {
-                //             notEmpty: {
-                //                 message: '选择上级'
-                //             }
-                //         }
-                //     }  
-                // }
+                fields: {
+                    name: {
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: '请输入名称'
+                            }
+                        }
+                    },
+                    route: {
+                        validators: {
+                            notEmpty: {
+                                message: '输入路由地址'
+                            }
+                        }
+                    },
+                    sort: {
+                        validators: {
+                            notEmpty: {
+                                message: '输入排序'
+                            }
+                        }
+                    },
+                    group_id: {
+                        validators: {
+                            notEmpty: {
+                                message: '选择分组'
+                            }
+                        }
+                    },
+                    pid: {
+                        validators: {
+                            notEmpty: {
+                                message: '选择上级'
+                            }
+                        }
+                    }  
+                }
             });
 
             //新增选中
             $(".btn_create").click( function () { 
 
+                var url = "{{url('node/store')}}";
+
+                $('#defaultForm').attr('action',url);
                 var id = $(this).attr('data-id');
 
                 $('#defaultForm')[0].reset();
@@ -267,6 +269,7 @@
                 var id = $(this).attr('data-id');
                 var url = '/node/edit/'+id;
 
+                $('#defaultForm').attr('action','/node/update/'+id);
                 $('#defaultForm')[0].reset();
 
                 $.get(url, function(rs){
@@ -276,12 +279,50 @@
                         $('#input_name').val(rs.data.name);
                         $('#input_route').val(rs.data.route);
                         $('#input_sort').val(rs.data.sort);
-                        $('#input_group_id').val(rs.data.group_id);
+                        $('#input_group_id').find("option[value='"+rs.data.group_id+"']").attr("selected",true);//.val(rs.data.group_id);
                         $("#parent-select").find("option[value='"+rs.data.pid+"']").attr("selected",true);
                     }
                 });
             });
 
+            //删除
+            $(".btn_delete").click( function () { 
+
+                var id  = $(this).attr('data-id');
+
+                layer.confirm('确定要删除？', {
+                  btn: ['确定','取消'], //按钮
+                  skin: 'layui-layer-molv'
+                }, function(){
+                    
+                    var url = '/node/destroy/'+id;
+
+                    $.get(url, function(rs){
+
+                        if(rs.status == 200){
+
+                            toastr.success(rs.message);
+                           
+                            setTimeout(function(){
+                                
+                                location.reload();
+                            },1200);
+
+                        }else{
+
+                            toastr.error(rs.message);
+                        }
+                    });
+
+
+                }, function(){
+
+                  layer.close();
+                });
+
+
+
+            });
 
 
             //父级折叠
@@ -332,6 +373,7 @@
                     $('.dd-child').show();
                 }
             });
+
         });
     </script>
 

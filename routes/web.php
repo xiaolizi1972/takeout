@@ -83,7 +83,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('node/index','NodeController@index');
     Route::post('node/store','NodeController@store');
     Route::get('node/edit/{id}','NodeController@edit');
-
+    Route::any('node/update/{id}','NodeController@update');
+    Route::get('node/destroy/{id}','NodeController@destroy');
 
 
 
