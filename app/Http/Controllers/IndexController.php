@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 class IndexController extends Controller
 {
 	
+	//主页
 	public function index()
 	{
 
@@ -18,7 +19,7 @@ class IndexController extends Controller
 	}
 
 
-	
+	//欢迎页
 	public function welcome()
 	{
 		return view('index.welcome');
@@ -45,6 +46,14 @@ class IndexController extends Controller
 	public function serverError()
 	{
 		return view('index.500');
+	}
+
+
+	//图标库
+	public function icon()
+	{
+
+		return view('index.icon');
 	}
 
 

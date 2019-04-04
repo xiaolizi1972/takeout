@@ -77,6 +77,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('index/not_found','IndexController@notFound');
     Route::get('index/server_error','IndexController@serverError');
     Route::get('index/server_denied','IndexController@serverDenied');
+    Route::get('index/icon','IndexController@icon');
 
 
     //节点
@@ -87,6 +88,13 @@ Route::middleware(['admin'])->group(function () {
     Route::get('node/destroy/{id}','NodeController@destroy');
 
 
+    //分组
+    Route::get('node_group/index','NodeGroupController@index');
+    Route::get('node_group/create','NodeGroupController@create');
+    Route::get('node_group/update/{id}','NodeGroupController@update');
+
+
+    //    
 
 
 });

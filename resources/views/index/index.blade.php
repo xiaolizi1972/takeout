@@ -57,7 +57,7 @@
                                 <a class="J_menuItem" href="{{url('admin/index')}}">管理员</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="{{url('group/index')}}">分组</a>
+                                <a class="J_menuItem" href="{{url('node_group/index')}}">分组</a>
                             </li>
                             <li>
                                 <a class="J_menuItem" href="{{url('role/index')}}">角色</a>
