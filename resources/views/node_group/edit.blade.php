@@ -24,16 +24,16 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>数据列表 <small>新增数据</small></h5>
+                        <h5>数据列表 <small>编辑数据</small></h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" class="form-horizontal" id="defaultForm" action="{{url('node_group/store')}}">
+                        <form method="post" class="form-horizontal" id="defaultForm" action="{{url('node_group/update',array('edit'=>$node_group->id))}}">
                             @csrf
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">名称</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="name" value="{{$node_group->name}}">
                                 </div>
                             </div>
 
@@ -42,9 +42,9 @@
                                 <label class="col-sm-2 control-label">图标</label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="input_icon" name="icon">
+                                        <input type="text" class="form-control" id="input_icon" name="icon" value="{{$node_group->icon}}">
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-primary" id="btn_icon" >搜索图标</button> 
+                                            <button type="button" class="btn btn-primary" id="btn_icon"  >搜索图标</button> 
                                         </span>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <label class="col-sm-2 control-label">排序</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control"  name="sort">
+                                    <input type="text" class="form-control"  name="sort" value="{{$node_group->sort}}">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -68,10 +68,10 @@
                                    
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" checked="" value="1" id="visible1" name="visible">显示
+                                            <input type="radio"  value="1" id="visible1" name="visible"  @if($node_group->visible == 1) checked="" @endif>显示
                                         </label>
                                         <label>
-                                            <input type="radio" value="0" id="visible2" name="visible">隐藏
+                                            <input type="radio" value="0" id="visible2" name="visible" @if($node_group->visible == 0) checked="" @endif>隐藏
                                         </label>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <button class="btn btn-primary" type="submit">保存内容</button>
-                                    <button class="btn btn-white" type="submit">取消</button>
+                                    <button class="btn btn-white" type="reset">取消</button>
                                 </div>
                             </div>
                         </form>

@@ -22,4 +22,9 @@ Class NodeGroupRepository extends BaseRepository
         $this->model =  new \App\Models\NodeGroup;
     }
 
+
+    //public function setAttrS
+
+
+
 }

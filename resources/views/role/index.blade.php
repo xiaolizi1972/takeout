@@ -34,7 +34,7 @@
                            
                             <div class="col-sm-3 m-b-xs">
                                 <a href="javascript:void(0);" class="btn btn-white glyphicon glyphicon-refresh" id="btn_refresh" ></a>
-                                <a href="javascript:void(0);" class="btn btn-primary" id="btn_create" data-url="{{url('node_group/create')}}">新增</a>
+                                <a href="javascript:void(0);" class="btn btn-primary" id="btn_create" data-url="{{url('role/create')}}">新增</a>
                             </div>
 
                             <div class="col-sm-2">
@@ -53,9 +53,7 @@
                                     </th>
                                     <th>ID</th>
                                     <th>名称</th>
-                                    <th>图标</th>
-                                    <th>排序</th>
-                                    <th>是否显示</th>
+                                    <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -67,25 +65,8 @@
                                         </td>
                                         <td>{{$list->id}}</td>
                                         <td>{{$list->name}}</td>
-                                        <td>
-                                            <span class="{{$list->icon}}"></span>
-                                        </td>
-                                        <td>{{$list->sort}}</td>
-                                        <td class="center">
-                                            <div class="switch">
-                                                <div class="onoffswitch">
-                                                    @if($list->visible == 1)
-                                                        <input type="checkbox" checked class="onoffswitch-checkbox" id="example{{$list->id}}" value="0">
-                                                    @else
-                                                        <input type="checkbox" class="onoffswitch-checkbox" id="example{{$list->id}}" value="1">
-                                                    @endif
-                                                    <label class="onoffswitch-label" for="example{{$list->id}}">
-                                                        <span class="onoffswitch-inner btn_status" data-id="{{$list->id}}"></span>
-                                                        <span class="onoffswitch-switch btn_status" data-id="{{$list->id}}"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td>{{$list->created_at}}</td>
+                                        
                                         <td class="center">
                                             <button type="button" class="btn btn-info btn-xs btn_edit" data-id="{{$list->id}}">编辑</button>
                                             <button type="button" class="btn btn-danger btn-xs btn_delete" data-id="{{$list->id}}">删除</button>
@@ -127,9 +108,7 @@
         //新增
         $("#btn_create").click( function () {
             
-            var url = $(this).attr('data-url');//"{{url('node_group/create')}}";
-
-            console.log(url);
+            var url = $(this).attr('data-url');
 
             layer.open({
                 type: 2,
@@ -149,7 +128,7 @@
             
             var id = $(this).attr('data-id');
 
-            var url = '/node_group/edit/'+id;
+            var url = '/role/edit/'+id;
 
             layer.open({
                 type: 2,
@@ -162,32 +141,6 @@
                 content: url
             })
         });
-
-
-        //更新状态
-        $(".btn_status").click( function () {
-
-            var id     =  $(this).attr('data-id');
-            var status = $('#example'+id).val();
-            var url =  '/node_group/visible/'+id+'/'+status;
-
-            var visible = status == 1 ? 0 : 1;
-
-            $('#example'+id).val(visible);
-
-            var status = $('#example'+id).val();
-
-            $.get(url,function(rs){
-                    
-                if(rs.status == 200){
-
-                    toastr.success(rs.message);
-                }else{
-                    toastr.error(rs.message);
-                }
-            });
-        });
-
 
         //刷新
         $('#btn_refresh').on("click",function (){

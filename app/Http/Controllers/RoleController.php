@@ -2,27 +2,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\NodeGroupRequest;
-use App\Http\Repository\NodeGroupRepository;
+use App\Http\Requests\RoleRequest;
+use App\Http\Repository\{RoleRepository,NodeRepository};
 
-class NodeGroupController extends Controller
+class RoleController extends Controller
 {
     
     protected $repository;
+    protected $NodeRepository;
 
     protected $inputOnly =  ['name','icon','visible','sort'];
 
-    public function __construct(NodeGroupRepository $repository)
+    public function __construct(RoleRepository $repository, NodeRepository $NodeRepository)
     {
         $this->repository =  $repository;
-
+        $this->NodeRepository =  $NodeRepository;
     }
 
 
     //列表
     public function index()
     {
-        return view('node_group.index',[
+        return view('role.index',[
 
             'lists' => $this->repository->paginate()
         ]);
@@ -32,12 +33,18 @@ class NodeGroupController extends Controller
     //新增
     public function create()
     {
-        return view('node_group.create');
+
+        //pr($this->NodeRepository->nodeTree());die;
+
+        return view('role.create',[
+
+            'nodes' => $this->NodeRepository->nodeTree(),
+        ]);
     }
 
 
     //保存
-    public function store(NodeGroupRequest $request)
+    public function store(RoleRequest $request)
     {
         $this->repository->create($request->only($this->inputOnly));
 
@@ -48,15 +55,15 @@ class NodeGroupController extends Controller
     //编辑
     public function edit($id)
     {
-        return view('node_group.edit',[
+        return view('role.edit',[
 
-            'node_group' =>  $this->repository->find($id),
+            'role' =>  $this->repository->find($id),
         ]);
     }
 
 
     //更新
-    public function update(NodeGroupRequest $request, $id)
+    public function update(RoleRequest $request, $id)
     {
 
         $this->repository->update($request->only($this->inputOnly), $id);

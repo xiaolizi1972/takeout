@@ -13,12 +13,12 @@
 */
 
 
-// Route::group(['namespace' => 'Admin','middleware'=>'admin'], function () {
+// Route::group(['namespace' => 'Admin', 'middleware'=>'admin'],  function () {
 
 // 	/*首页路由*/
-//     Route::get('/','IndexController@index');
-//     Route::get('index/welcome','IndexController@welcome')->name('welcome');
-//     Route::get('index/notFound','IndexController@notFound');
+//     Route::get('/', 'IndexController@index');
+//     Route::get('index/welcome', 'IndexController@welcome')->name('welcome');
+//     Route::get('index/notFound', 'IndexController@notFound');
 //     Route::get('index/serverError','IndexController@serverError');
 
 //     /*管理员日志*/
@@ -72,34 +72,40 @@
 Route::middleware(['admin'])->group(function () {
     
     /*首页路由*/
-    Route::get('/','IndexController@index');
-    Route::get('index/welcome','IndexController@welcome')->name('welcome');
-    Route::get('index/not_found','IndexController@notFound');
-    Route::get('index/server_error','IndexController@serverError');
-    Route::get('index/server_denied','IndexController@serverDenied');
-    Route::get('index/icon','IndexController@icon');
+    Route::get('/', 'IndexController@index');
+    Route::get('index/welcome', 'IndexController@welcome')->name('welcome');
+    Route::get('index/not_found', 'IndexController@notFound');
+    Route::get('index/server_error', 'IndexController@serverError');
+    Route::get('index/server_denied', 'IndexController@serverDenied');
+    Route::get('index/icon', 'IndexController@icon');
 
 
     //节点
-    Route::get('node/index','NodeController@index');
-    Route::post('node/store','NodeController@store');
-    Route::get('node/edit/{id}','NodeController@edit');
-    Route::any('node/update/{id}','NodeController@update');
-    Route::get('node/destroy/{id}','NodeController@destroy');
+    Route::get('node/index', 'NodeController@index');
+    Route::post('node/store', 'NodeController@store');
+    Route::get('node/edit/{id}', 'NodeController@edit');
+    Route::any('node/update/{id}', 'NodeController@update');
+    Route::get('node/destroy/{id}', 'NodeController@destroy');
 
 
     //分组
-    Route::get('node_group/index','NodeGroupController@index');
-    Route::get('node_group/create','NodeGroupController@create');
-    Route::get('node_group/update/{id}','NodeGroupController@update');
+    Route::get('node_group/index', 'NodeGroupController@index');
+    Route::get('node_group/create', 'NodeGroupController@create');
+    Route::post('node_group/store', 'NodeGroupController@store');
+    Route::get('node_group/edit/{id}', 'NodeGroupController@edit');
+    Route::any('node_group/update/{id}', 'NodeGroupController@update');
+    Route::get('node_group/visible/{id}/{visible}', 'NodeGroupController@visible');
 
-
-    //    
-
+    //角色    
+    Route::get('role/index', 'RoleController@index');
+    Route::get('role/create', 'RoleController@create');
+    // Route::post('role/store', 'RoleController@store');
+    // Route::edit('role/edit/{id}', 'RoleController@edit');
+    // Route::any('role/update/{id}','RoleController@update');
 
 });
 
 //不使用中间件
-Route::post('login/login','LoginController@login')->name('login');
-Route::get('login/logout','LoginController@logout')->name('logout');
-Route::get('login/loginForm','LoginController@loginForm')->name('loginForm');
+Route::post('login/login', 'LoginController@login')->name('login');
+Route::get('login/logout', 'LoginController@logout')->name('logout');
+Route::get('login/loginForm', 'LoginController@loginForm')->name('loginForm');

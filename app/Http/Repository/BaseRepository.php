@@ -95,9 +95,9 @@ abstract Class BaseRepository extends Repository
     	} catch (\Exception $e) {
     		
            // echo $e->getMessage();die;
-            throw new \App\Exceptions\CustomException($e->getMessage());
+            throw new \App\Exceptions\Custom($e->getMessage());
 
-    		//throw new \App\Exceptions\CustomException(lang('create error'));
+    		//throw new \App\Exceptions\Custom(lang('create error'));
     	}
 
     	return $id;
@@ -120,7 +120,7 @@ abstract Class BaseRepository extends Repository
 
     	} catch (\Exception $e) {
     		
-    		throw new Exception(lang('update error'));	
+    		throw new \App\Exceptions\Custom($e->getMessage());	
     	}
 
     	return true;
@@ -142,7 +142,7 @@ abstract Class BaseRepository extends Repository
 
     	} catch (\Exception $e) {
     		
-    		throw new Exception(lang('delete error'));	
+    		throw new \App\Exceptions\Custom(lang('delete error'));	
     	}
 
    		return true;

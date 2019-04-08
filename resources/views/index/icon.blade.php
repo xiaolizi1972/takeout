@@ -25,8 +25,6 @@
             line-height:100px;
         }
     </style>
-
-
 </head>
 
 <body class="gray-bg">
