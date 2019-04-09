@@ -40,18 +40,15 @@
                                         <ul>
                                             @foreach($nodes as $group)
                                                 <li class="jstree" >
-                                                    <span class="tree-list-group" date-id="{{$group->id}}"> 
-                                                        {{$group->name}} 
-                                                    </span>
-                                                    <input type="checkbox" name="node[]" style="display: none;">
+                                                    {{$group->name}} 
+                                                    <input type="checkbox" name="node[]" style="display:none;"  value="{{$group->id}}" class="level-group" id="group-tree{{$group->id}}">
                                                     <ul>
                                                         @foreach($group->parent as $parent)
-                                                            <li>
-                                                                <span class="tree-list-parent"> 
-                                                                   <!--  <i class="jstree-icon jstree-themeicon fa fa-square-o jstree-themeicon-custom" role="presentation"></i> -->
+                                                            <li class="level-group{{$parent->group_id}} tree-list-parent">
+                                                                <span> 
                                                                     {{$parent->name}} 
                                                                 </span>
-                                                                <input type="checkbox" name="node[]" style="display: none;">
+                                                                <input type="checkbox" name="node[]" style="display: none;" class="level-group{{$group->id}}">
                                                                 <ul>
                                                                     @foreach($parent->child as $child)
                                                                         <li>
@@ -106,50 +103,37 @@
 
     <script>
 
-        $(document).ready(function () {
-
-            $('.tree-lists').jstree({
-                'core': {
-                    'check_callback': true
-                },
-                'plugins': ['types', 'dnd'],
-                'types': {
-                    'default': {
-                        'icon': 'fa fa-square-o'
-                    },
-                    'html': {
-                        'icon': 'fa fa-check-square'
-                    },
-                }
-            });
+        $(".tree-lists").jstree({
+            "checkbox" : {
+            "keep_selected_style" : false
+        },
+        "plugins" : [ "checkbox" ]
         });
 
 
-        //组选中
-        $(".tree-lists .tree-list-group").click( function () { 
 
-            console.log(111);
+        // $(document).ready(function () {
 
-           // $('.tree-list-parent').prop('class','jstree-icon jstree-themeicon fa fa-check-square jstree-themeicon-custom');
+        //     $('.tree-lists').jstree({
+        //         'core': {
+        //             'check_callback': true
+        //         },
+        //         // 'plugins': ['types', 'dnd'],
+        //         // 'types': {
+        //         //     'default': {
+        //         //         'icon': 'fa fa-square-o'
+        //         //     },
+        //         //     'html': {
+        //         //         'icon': 'fa fa-check-square'
+        //         //     },
+        //         // }
+        //     });
+        // });
 
-
-            //$(this).hide();
-
-        });
-
-
-        //父级选中
-
-
-
-
-        //子级选中
 
 
     </script>
 
-    
-    
 </body>
 
 </html>

@@ -20,9 +20,14 @@
     <style type="text/css">
         
         .bs-glyphicons li {
-            width: 100px;
-            height: 100px;
-            line-height:100px;
+            width: 42px;
+            height: 42px;
+            line-height: 42px;
+            padding: 5px
+        }
+        .bs-glyphicons .glyphicon{
+          margin: 0;
+          font-size: 20px;
         }
     </style>
 </head>
