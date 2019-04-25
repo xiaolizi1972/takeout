@@ -96,4 +96,58 @@ class RoleController extends Controller
     }
 
 
+
+    public function RoleData()
+    {   
+
+        $data =    [
+                        [
+                            "name"  => "管理员管理",
+                            "value" => "6",
+                            "checked"   => false,
+                            "disabled"  => false,
+                            "list"  => [
+                                [
+                                    "name"  => "添加管理员",
+                                    "value" => "7",
+                                    "checked"   => false,
+                                    "disabled"  => false,
+                                    'list'  => [
+                                            [
+                                                "name"  => "添加管理",
+                                                "value" => "8",
+                                                "checked"   => false,
+                                                "disabled"  => false
+                                            ],
+                                            [
+                                                "name"  => "删除管理",
+                                                "value" => "8",
+                                                "checked"   => false,
+                                                "disabled"  => false
+                                            ],
+
+                                    ]
+                                    
+                                ],
+                                [
+                                    "name"  => "管理员列表",
+                                    "value" => "8",
+                                    "checked"   => false,
+                                    "disabled"  => false
+                                ],
+                                [
+                                    "name"  => "管理员管理",
+                                    "value" => "9",
+                                    "checked"   => false,
+                                    "disabled"  => false
+                                ]
+                            ]
+                        ]   
+                    ];
+
+        return json(200, 'ok', $data);
+
+    }
+
+
 }
