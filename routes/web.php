@@ -100,7 +100,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('role/index', 'RoleController@index');
     Route::get('role/create', 'RoleController@create');
     Route::get('role/role_data','RoleController@RoleData');
-    // Route::post('role/store', 'RoleController@store');
+    Route::post('role/store', 'RoleController@store');
     // Route::edit('role/edit/{id}', 'RoleController@edit');
     // Route::any('role/update/{id}','RoleController@update');
 

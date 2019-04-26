@@ -14,4 +14,9 @@ class NodeGroup extends Model
     protected $fillable = ['name','icon','visible','sort'];
     
 
+    public function node_tree()
+    {
+         return $this->hasMany('App\Models\Node', 'group_id', 'id')->where('pid', '=', '0');//->select('id','name');
+    }
+
 }

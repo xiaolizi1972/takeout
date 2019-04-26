@@ -64,22 +64,45 @@ class NodeRepository extends BaseRepository
     public function nodeTree()
     {
 
-        $lists =  NodeGroup::get();
+        $groups =  NodeGroup::with('node_tree')->select('name','id')->get()->toArray();
 
-        foreach ($lists as $key => $val) {
-            
-            $parent =  $this->model->where([['pid','=',0],['group_id','=', $val['id']]])->get();
+        $data   =  [];
+        //组
+        foreach ($groups as $key => $val) {
 
-            $lists[$key]['parent'] =  $parent;
+            $data[$key]['checked']  = false;
+            $data[$key]['disabled'] = false;
+            $data[$key]['value']    = $val['id'];
+            $data[$key]['name']     = $val['name'];
 
-            foreach ($parent as $k => $v) {
-                
-                $lists[$key]['parent'][$k]['child'] =  $this->model->where('pid', $v['id'])->get();
+            //父级
+            foreach ($val['node_tree'] as $ke => $va) {
+               
+                $data[$key]['list'][$ke]['checked']  = false;
+                $data[$key]['list'][$ke]['disabled'] = false;
+                $data[$key]['list'][$ke]['value']    = $va['id'];
+                $data[$key]['list'][$ke]['name']     = $va['name'];
+
+                //子级
+                $child = $this->model->where('pid', '=', $va['id'])->select('id','name')->get();
+
+                if($child){
+
+                    foreach ($child as $k => $v) {
+                        
+                        $data[$key]['list'][$ke]['list'][$k]['checked']  = false;
+                        $data[$key]['list'][$ke]['list'][$k]['disabled'] = false;
+                        $data[$key]['list'][$ke]['list'][$k]['value']    = $v['id'];
+                        $data[$key]['list'][$ke]['list'][$k]['name']     = $v['name'];
+                    }
+                }
             }
         }
 
-        return $lists;
+        return $data;
     }
+
+
 
 
 

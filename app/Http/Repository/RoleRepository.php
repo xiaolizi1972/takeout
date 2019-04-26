@@ -28,14 +28,15 @@ class RoleRepository extends BaseRepository
     
             $role = $this->model->create($data);
 
-            $role->nodes()->sync($data['all_list']);
+            $role->nodes()->sync($data['nodes']);
     
             DB::commit();
             
         } catch (\Exception $e) {
         
             DB::rollBack();
-            throw new \App\Exceptions\CustomException(lang('create error'),500);
+
+            throw new \App\Exceptions\Custom($e->getMessage(), 500);
         }
         
         return true;
@@ -65,10 +66,9 @@ class RoleRepository extends BaseRepository
             
         } catch (\Exception $e) {
             
-            pr($e->getMessage());die;
-
             DB::rollBack();
-            throw new \App\Exceptions\CustomException(lang('update error'),500);
+
+            throw new \App\Exceptions\Custom($e->getMessage(), 500);
         }
         
         return true;
