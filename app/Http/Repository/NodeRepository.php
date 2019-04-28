@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Repository;
 
-use App\Models\{Node,NodeGroup};
+use App\Models\{Node,NodeGroup,RoleNode};
 
 /**
  | -------------------
@@ -100,6 +100,59 @@ class NodeRepository extends BaseRepository
         }
 
         return $data;
+    }
+
+
+
+    /**
+     * 角色节点 
+     *
+     *
+     */
+    public function roleNode($role_id)
+    {
+        //获取
+        $node_arr =  RoleNode::where('role_id', $role_id)->pluck('node_id');
+
+        $parents  =  $this->model->whereIn('id', $node_arr)->get()->toArray();
+
+        $group_arr = array_unique(array_column($parents, 'group_id'));
+
+        //pr($group_arr);die;
+
+        $groups   =  NodeGroup::whereIn('id', $node_arr)->select('name')->get();
+
+        $data = [];
+
+        foreach ($groups as $key => $val) {
+           
+            $data[$key]['checked']  = false;
+            $data[$key]['disabled'] = false;
+            $data[$key]['value']    = '';
+            $data[$key]['name']     = $val['name'];
+
+            foreach ($parents as $ke => $va) {
+                
+                if($val['pid'] == 0){
+
+                    $data[$key]['list'][$ke]['checked']  = false;
+                    $data[$key]['list'][$ke]['disabled'] = false;
+                    $data[$key]['list'][$ke]['value']    = $va['id'];
+                    $data[$key]['list'][$ke]['name']     = $va['name'];
+
+                    foreach ($parents as $k => $v) {
+                       
+                        $data[$key]['list'][$ke]['list'][$k]['checked']  = false;
+                        $data[$key]['list'][$ke]['list'][$k]['disabled'] = false;
+                        $data[$key]['list'][$ke]['list'][$k]['value']    = $v['id'];
+                        $data[$key]['list'][$ke]['list'][$k]['name']     = $v['name'];
+                    }
+                }
+            }
+        }
+
+        return $data;
+
     }
 
 

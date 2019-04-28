@@ -99,9 +99,9 @@ Route::middleware(['admin'])->group(function () {
     //角色    
     Route::get('role/index', 'RoleController@index');
     Route::get('role/create', 'RoleController@create');
-    Route::get('role/role_data','RoleController@RoleData');
+    Route::get('role/role_data/{id}','RoleController@RoleData');
     Route::post('role/store', 'RoleController@store');
-    // Route::edit('role/edit/{id}', 'RoleController@edit');
+    Route::get('role/edit/{id}', 'RoleController@edit');
     // Route::any('role/update/{id}','RoleController@update');
 
 });

@@ -57,6 +57,9 @@ class RoleController extends Controller
     //编辑
     public function edit($id)
     {
+
+        //pr($this->repository->find($id));die;
+
         return view('role.edit',[
 
             'role' =>  $this->repository->find($id),
@@ -89,67 +92,24 @@ class RoleController extends Controller
     public function visible($id, $visible)
     {
 
-        // echo $id;
-        // echo $status;die;
-
         $this->repository->update(['visible'=>$visible], $id);
 
         return json(200, lang('action success'));
     }
 
 
-
-    public function RoleData()
+    //角色数据
+    public function RoleData($id)
     {   
 
-        // $data =    [
-        //                 [
-        //                     "name"  => "管理员管理",
-        //                     "value" => "6",
-        //                     "checked"   => false,
-        //                     "disabled"  => false,
-        //                     "list"  => [
-        //                         [
-        //                             "name"  => "添加管理员",
-        //                             "value" => "7",
-        //                             "checked"   => false,
-        //                             "disabled"  => false,
-        //                             'list'  => [
-        //                                     [
-        //                                         "name"  => "添加管理",
-        //                                         "value" => "8",
-        //                                         "checked"   => false,
-        //                                         "disabled"  => false
-        //                                     ],
-        //                                     [
-        //                                         "name"  => "删除管理",
-        //                                         "value" => "8",
-        //                                         "checked"   => false,
-        //                                         "disabled"  => false
-        //                                     ],
+        if($id){
 
-        //                             ]
-                                    
-        //                         ],
-        //                         [
-        //                             "name"  => "管理员列表",
-        //                             "value" => "8",
-        //                             "checked"   => false,
-        //                             "disabled"  => false
-        //                         ],
-        //                         [
-        //                             "name"  => "管理员管理",
-        //                             "value" => "9",
-        //                             "checked"   => false,
-        //                             "disabled"  => false
-        //                         ]
-        //                     ]
-        //                 ]   
-        //             ];
+            $data = $this->NodeRepository->roleNode(8);
 
+        }else{
 
-        $data = $this->NodeRepository->nodeTree();
-
+            $data = $this->NodeRepository->nodeTree();
+        }
 
         //pr($data);die;
 
