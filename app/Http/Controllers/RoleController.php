@@ -103,11 +103,11 @@ class RoleController extends Controller
     {   
 
         if($id){
-
-            $data = $this->NodeRepository->roleNode(8);
+          
+            $data = $this->NodeRepository->roleNode($id);
 
         }else{
-
+           
             $data = $this->NodeRepository->nodeTree();
         }
 

@@ -128,12 +128,12 @@ class NodeRepository extends BaseRepository
            
             $data[$key]['checked']  = false;
             $data[$key]['disabled'] = false;
-            $data[$key]['value']    = '';
+            $data[$key]['value']    = $val['id'];
             $data[$key]['name']     = $val['name'];
 
             foreach ($parents as $ke => $va) {
                 
-                if($val['pid'] == 0){
+                if($va['pid'] == 0){
 
                     $data[$key]['list'][$ke]['checked']  = false;
                     $data[$key]['list'][$ke]['disabled'] = false;
@@ -141,11 +141,15 @@ class NodeRepository extends BaseRepository
                     $data[$key]['list'][$ke]['name']     = $va['name'];
 
                     foreach ($parents as $k => $v) {
+
+                        if($v['pid'] == $va['id']){
+
+                            $data[$key]['list'][$ke]['list'][$k]['checked']  = false;
+                            $data[$key]['list'][$ke]['list'][$k]['disabled'] = false;
+                            $data[$key]['list'][$ke]['list'][$k]['value']    = $v['id'];
+                            $data[$key]['list'][$ke]['list'][$k]['name']     = $v['name'];
+                        }
                        
-                        $data[$key]['list'][$ke]['list'][$k]['checked']  = false;
-                        $data[$key]['list'][$ke]['list'][$k]['disabled'] = false;
-                        $data[$key]['list'][$ke]['list'][$k]['value']    = $v['id'];
-                        $data[$key]['list'][$ke]['list'][$k]['name']     = $v['name'];
                     }
                 }
             }
@@ -156,9 +160,11 @@ class NodeRepository extends BaseRepository
     }
 
 
-
-
-
+    /**
+     * 删除 
+     *
+     *
+     */
     public function delete($id)
     {
 

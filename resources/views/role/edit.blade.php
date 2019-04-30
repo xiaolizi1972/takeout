@@ -84,10 +84,10 @@
         var authtree = layui.authtree;
         var form = layui.form;
         var layer = layui.layer;
-        var url  = '/admin/role/role_data/'+'{{$role->id}}';
+        var url  = '/role/role_data/'+'{{$role->id}}';
         // 初始化
         $.ajax({
-            url: "{{url('role/role_data')}}",
+            url: url,
             dataType: 'json',
             success: function(data){
                 // 渲染时传入渲染目标ID，树形结构数据（具体结构看样例，checked表示默认选中），以及input表单的名字
@@ -142,6 +142,7 @@ function checkAll(dst){
     layui.use(['jquery', 'layer', 'authtree'], function(){
         var layer = layui.layer;
         var authtree = layui.authtree;
+
 
         authtree.checkAll(dst);
     });

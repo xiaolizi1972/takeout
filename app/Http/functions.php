@@ -68,35 +68,35 @@ if(! function_exists('log_record')){
 
             case 'emergency':
 
-                Log::emergency($message);
+                    Log::emergency($message);
                 break;
 
             case 'alert':
-                Log::alert($message);
+                    Log::alert($message);
                 break;
 
             case 'critical':
 
-                Log::critical($message);
+                    Log::critical($message);
                 break;
             case 'error':
                 
-                Log::error($message);
+                    Log::error($message);
                 break;
             case 'warning':
                
-                Log::warning($message);
+                    Log::warning($message);
                 break;
             case 'notice':
                 
-                Log::notice($message);
+                    Log::notice($message);
                 break;
             case 'info':
                
-                Log::info($message);
+                    Log::info($message);
                 break;    
             default:
-                Log::debug($message);
+                    Log::debug($message);
                 break;
         }
     }
@@ -145,7 +145,7 @@ if(! function_exists('log_record')){
          */
         function  decrypt($string)
         {
-            return Crypt::decryptString($encrypted);
+            return Crypt::decryptString($string);
         }
     }
 
@@ -185,6 +185,10 @@ if(! function_exists('log_record')){
 
         }
     }
+
+
+
+
 
 
 }
